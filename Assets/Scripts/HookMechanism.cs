@@ -4,7 +4,7 @@ public class HookMechanism : MonoBehaviour
 {
     public static HookMechanism instance;
     public float speed = 20f;
-    public float maxDistance = 15f;
+    public float maxDistance = 20f;
 
     private Vector3 targetDirection;
     private Vector3 startPoint;
