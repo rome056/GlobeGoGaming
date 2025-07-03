@@ -13,12 +13,24 @@ public class HookMechanism : MonoBehaviour
 
     private Transform playerTransform;
     private GameObject hookedEnemy;
+    private LineRenderer lineRenderer;
 
     public bool IsReturning { get; private set; } = false;
     public bool IsMovingForward { get; private set; } = true;
     public bool HasCaughtEnemy { get; private set; } = false;
     public GameObject HookedEnemy => hookedEnemy;
     public System.Action onHookReturn; // Tawagin ito kapag tapos na ang hook
+
+    void Start()
+    {
+        lineRenderer = GetComponent<LineRenderer>();
+        if (lineRenderer != null && playerTransform != null)
+        {
+            lineRenderer.positionCount = 2;
+            lineRenderer.SetPosition(0, playerTransform.position); // Simula (player)
+            lineRenderer.SetPosition(1, transform.position);       // Hook position
+        }
+    }
 
     public void SetUpHook(Transform player)
     {
@@ -51,35 +63,40 @@ public class HookMechanism : MonoBehaviour
     void Update()
 {
     if (playerTransform == null)
-        return; // Hintayin ang SetUpHook para hindi mag-error
+            return; // Hintayin ang SetUpHook para hindi mag-error
 
-    if (IsMovingForward)
-    {
-        hookProgress += Time.deltaTime * (speed / Vector3.Distance(startPoint, targetPoint));
-        float easedProgress = Mathf.SmoothStep(0f, 1f, hookProgress);
-        transform.position = Vector3.Lerp(startPoint, targetPoint, easedProgress);
-
-        if (hookProgress >= 1f)
+        if (IsMovingForward)
         {
-            IsMovingForward = false;
-            IsReturning = true;
-        }
-    }
-    else if (IsReturning)
-    {
-        Vector3 returnDir = (playerTransform.position - transform.position).normalized;
-        transform.position += returnDir * speed * Time.deltaTime;
+            hookProgress += Time.deltaTime * (speed / Vector3.Distance(startPoint, targetPoint));
+            float easedProgress = Mathf.SmoothStep(0f, 1f, hookProgress);
+            transform.position = Vector3.Lerp(startPoint, targetPoint, easedProgress);
 
-        if (hookedEnemy != null)
-        {
-            hookedEnemy.transform.position = transform.position; // Hinila ang enemy
+            if (hookProgress >= 1f)
+            {
+                IsMovingForward = false;
+                IsReturning = true;
+            }
         }
+        else if (IsReturning)
+        {
+            Vector3 returnDir = (playerTransform.position - transform.position).normalized;
+            transform.position += returnDir * speed * Time.deltaTime;
 
-        if (Vector3.Distance(transform.position, playerTransform.position) < 1f)
-        {
-            onHookReturn?.Invoke(); // Tawagin si Player
-            Destroy(gameObject);    // Tapos sirain ang hook
+            if (hookedEnemy != null)
+            {
+                hookedEnemy.transform.position = transform.position; // Hinila ang enemy
+            }
+
+            if (Vector3.Distance(transform.position, playerTransform.position) < 1f)
+            {
+                onHookReturn?.Invoke(); // Tawagin si Player
+                Destroy(gameObject);    // Tapos sirain ang hook
+            }
         }
+        if (lineRenderer != null)
+        {
+            lineRenderer.SetPosition(0, playerTransform.position); 
+            lineRenderer.SetPosition(1, transform.position);      
         }
     }
 
