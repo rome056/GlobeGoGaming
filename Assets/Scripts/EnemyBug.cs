@@ -10,11 +10,9 @@ public class EnemyBug : MonoBehaviour
     public float dashCooldown = 3f; // Time between dashes
 
     [Header("Debug")]
-    [SerializeField] private bool isDashing = false;
     private float originalSpeed;
     private Coroutine dashCoroutine;
 
-    private bool isSlowed = false;
     private bool isStunned = false;
 
 
@@ -49,14 +47,12 @@ public class EnemyBug : MonoBehaviour
     IEnumerator BugDashSkill()
     {
         // Start dash
-        isDashing = true;
         speed *= dashSpeedMultiplier;
 
         yield return new WaitForSeconds(dashDuration);
 
         // End dash
         speed = originalSpeed;
-        isDashing = false;
     }
 
     public void OnTriggerEnter(Collider other)

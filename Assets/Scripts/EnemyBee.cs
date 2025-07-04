@@ -16,7 +16,6 @@ public class EnemyBee : MonoBehaviour
     private float chargeTimer = 0f;
     public bool isHooked = false;  // ← Idedetect kung nahook na
 
-    private bool isSlowed = false;
     private bool isStunned = false;
     private float originalSpeed;
 
@@ -106,7 +105,6 @@ public class EnemyBee : MonoBehaviour
     {
         if (!isStunned)
         {
-            isSlowed = true;
             float currentSpeed = speed;
             speed = newSpeed;
             StartCoroutine(BlinkEffect(duration));
@@ -118,7 +116,6 @@ public class EnemyBee : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         speed = originalSpeed;
-        isSlowed = false;
 
         if (modelRenderer != null)
             modelRenderer.material.color = originalColor;

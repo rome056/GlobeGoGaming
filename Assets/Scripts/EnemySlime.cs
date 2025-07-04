@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class EnemySlime : MonoBehaviour
 {
-
-
     public float speed = 2f; // Bilis ng kalaban
     public GameObject smallEnemyPrefab;
     public float spreadRadius = 1.5f;
-    private bool isSlowed = false;
     private bool isStunned = false;
     private float originalSpeed;
 
@@ -84,7 +81,6 @@ public class EnemySlime : MonoBehaviour
     {
         if (!isStunned)
         {
-            isSlowed = true;
             float currentSpeed = speed;
             speed = newSpeed;
             StartCoroutine(BlinkEffect(duration));
@@ -95,7 +91,6 @@ public class EnemySlime : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         speed = originalSpeed;
-        isSlowed = false;
 
         if (modelRenderer != null)
             modelRenderer.material.color = originalColor;

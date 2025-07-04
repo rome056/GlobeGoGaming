@@ -6,6 +6,7 @@ public class SkillManager : MonoBehaviour
     public float stunDuration = 3f;
     public float slowDuration = 5f;      // Gaano katagal ang slow effect
     public float newSlowSpeed = 0.5f;    // Bagong speed ng kalaban habang slow
+    public int healAmount = 10;
 
     //void Update()
     //{
@@ -81,5 +82,18 @@ public class SkillManager : MonoBehaviour
         }
 
         yield return null;
+    }
+
+    public void HealPlayer()
+    {
+        PlayerController player = FindObjectOfType<PlayerController>();
+        if (player != null)
+        {
+            player.Heal(healAmount);
+        }
+        else
+        {
+            Debug.LogWarning("No PlayerController found!");
+        }
     }
 }

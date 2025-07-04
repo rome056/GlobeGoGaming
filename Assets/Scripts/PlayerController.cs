@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 using TMPro;
 using UnityEngine.UI;
 
@@ -10,41 +9,37 @@ public class PlayerController : MonoBehaviour
 
     [Header("Hook Settings")]
     public GameObject hookPrefab;
-    private GameObject hookObject;
     private HookMechanism hook;
     private bool isFishing = false;
 
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
-    public float leftBoundary = -5f;  // Set sa Inspector ang left limit
-    public float rightBoundary = 5f;  // Set sa Inspector ang right limit
-    private Coroutine barDecreaseCoroutine;
+    public float leftBoundary = -5f;
+    public float rightBoundary = 5f;
 
     [Header("Boundary Visualization")]
     public bool showBoundaries = true;
     public Color boundaryColor = Color.red;
 
     [Header("Player HP")]
-    public float MaxHP = 100;
-    public float currentHP = 100;
+    public float MaxHP = 100f;
+    public float currentHP;
 
     [Header("Player EXP")]
-    public float MaxExp = 100;
-    public float currentEXP = 0;
-    public Text limittextExp;
+    public float MaxExp = 100f;
+    public float currentEXP = 0f;
+    public TextMeshProUGUI limittextExp;
     public Slider expSlider;
     public Image expFill;
-   
 
     [Header("Count Enemy Kill")]
     public int counterEnemy = 0;
-    //public Text counttextEnemy;
     public TextMeshProUGUI counttextEnemy;
 
     [Header("Bar System")]
-    public float MaxBar = 100;
-    public float currentBar = 0;
-    public Text BarText;
+    public float MaxBar = 100f;
+    public float currentBar = 0f;
+    public TextMeshProUGUI BarText;
     public Slider barSlider;
     public Image barFill;
     public Gradient barGradient;
@@ -54,15 +49,9 @@ public class PlayerController : MonoBehaviour
     public Image hpFill;
     public Gradient hpGradient;
 
-    private void Start()
-    {
-        currentHP = MaxHP;
-        currentEXP = 0;
-        counterEnemy = 0;
-        currentBar = 0;
-        barDecreaseCoroutine = StartCoroutine(DecreaseBarOverTime());
-    }
-    public void Awake()
+    private Coroutine barDecreaseCoroutine;
+
+    private void Awake()
     {
         if (instance == null)
         {
@@ -74,198 +63,55 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    private void Start()
     {
-        currentHP -= damage;
-        UpdateUIHealth();   
-        Debug.Log(currentHP);
-        if (currentHP <= 0)
-        {
-            currentHP = 0;
-            Destroy(gameObject);
-        }
-
-
-    }
-
-    public void TakeExp(int exp)
-    {
-        //currentEXP += exp;
-        currentEXP = currentEXP + exp;
-        Debug.Log("Exp is " + currentEXP);
-        UpdateExp();
+        currentHP = MaxHP;
+        currentEXP = 0f;
+        counterEnemy = 0;
+        currentBar = 0f;
+        barDecreaseCoroutine = StartCoroutine(DecreaseBarOverTime());
+        UpdateUIHealth();
         UpdateUIExp();
-
-        if (currentEXP >= 100)
-        {
-            currentEXP = MaxExp;
-
-        }
-    }
-
-    public void TakeExpBar(int bar)
-    {
-        currentEXP+= bar;
-        Debug.Log("Exp is " + currentEXP);
-      
-
-
-        if (currentEXP >= 100)
-        {
-            currentEXP = MaxExp;
-        }
-    }
-    public void TakeBar(int bar)
-    {
-        currentBar += bar;
-        Debug.Log("Bar is " + currentBar);
         UpdateUIBar();
-        UpdateBar();
-        currentBar = Mathf.Clamp(currentBar, 0, MaxBar);
-        if (currentBar >= 100)
-        {
-            currentBar = MaxBar;
-        }
-
-    }
-    public void UpdateUIExp()
-    {
-        if (expSlider != null)
-        {
-            expSlider.maxValue = MaxExp;
-            expSlider.value = currentEXP;
-        }
-        
-    }
-    public void UpdateUIBar()
-    {
-        if (barSlider != null)
-        {
-            barSlider.maxValue = MaxBar;
-            barSlider.value = currentBar;
-        }
-        if (barFill)
-        {
-            barFill.color = barGradient.Evaluate(barSlider.normalizedValue);
-        }
-    }
-    public void UpdateUIHealth()
-    {
-        if (hpSlider != null)
-        {
-            hpSlider.maxValue = MaxHP;
-            hpSlider.value = currentHP;
-        }
-        if (hpFill)
-        {
-            hpFill.color = hpGradient.Evaluate(hpSlider.normalizedValue);
-        }
-    }
-
-    public void TakeCountEnemy()
-    {
-        counterEnemy++;
         UpdateCountEnemy();
     }
 
-    public void UpdateCountEnemy()
-    {
-        counttextEnemy.text = " Enemy Hooked: " + counterEnemy;
-    }
-    public void UpdateExp()
-    {
-        limittextExp.text = " exp is:  " + currentEXP;
-
-    }
-    public void UpdateBar()
-    {
-        BarText.text = " Bar is: " + currentBar;
-    }
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            Debug.Log(" Enemy Eat");
-        }
-        if (other.CompareTag("EnemyAttack"))
-        {
-            EnemyBee enemy = other.GetComponent<EnemyBee>();
-            if (enemy != null && !enemy.isHooked) // ✅ Only take damage if enemy was NOT hooked
-            {
-                TakeDamage(10); // ← Dito ka lang nadadamage kapag hindi siya nahook
-            }
-        }
-    }
-    public void EnemyDestroy()
-    {
-        Destroy(gameObject);
-    }
-    IEnumerator DecreaseBarOverTime()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(0.5f); // Wait for 1 second
-            TakeBar(-1); // Decrease bar by 1
-        }
-    }
-
-    void OnDestroy()
-    {
-        // Stop the coroutine when the object is destroyed
-        if (barDecreaseCoroutine != null)
-        {
-            StopCoroutine(barDecreaseCoroutine);
-        }
-    }
-
-    void Update()
+    private void Update()
     {
         HandleMovement();
         HandleFishing();
     }
 
-    void HandleMovement()
+    #region Movement & Fishing
+    private void HandleMovement()
     {
-        // Get horizontal input (A/D keys or Left/Right arrows)
         float horizontalInput = Input.GetAxis("Horizontal");
 
         if (horizontalInput != 0)
         {
-            // Calculate new position
             Vector3 newPosition = transform.position;
             newPosition.x += horizontalInput * moveSpeed * Time.deltaTime;
-
-            // Clamp position within boundaries
             newPosition.x = Mathf.Clamp(newPosition.x, leftBoundary, rightBoundary);
-
-            // Apply the constrained position
             transform.position = newPosition;
         }
     }
 
-    void HandleFishing()
+    private void HandleFishing()
     {
         if (Input.GetMouseButtonDown(0) && !isFishing)
         {
             LaunchHook();
         }
 
-        if (isFishing && hook != null)
+        if (isFishing && hook != null && !hook.IsReturning && !hook.IsMovingForward)
         {
-            if (!hook.IsReturning && hook.HasCaughtEnemy)
-            {
-                Debug.Log("Nakahuli ng kalaban: " + hook.HookedEnemy.name);
-            }
-            if (!hook.IsReturning && !hook.IsMovingForward)
-            {
-                isFishing = false;
-            }
+            isFishing = false;
         }
     }
 
-    void LaunchHook()
+    private void LaunchHook()
     {
-        hookObject = Instantiate(hookPrefab, transform.position, Quaternion.identity);
+        var hookObject = Instantiate(hookPrefab, transform.position, Quaternion.identity);
         hook = hookObject.GetComponent<HookMechanism>();
         hook.SetUpHook(transform);
         isFishing = true;
@@ -276,32 +122,139 @@ public class PlayerController : MonoBehaviour
     {
         isFishing = false;
     }
+    #endregion
 
-    // Para makita mo ang boundaries sa Scene view
-    void OnDrawGizmos()
+    #region Take Damage & Heal
+    public void TakeDamage(int damage)
+    {
+        currentHP -= damage;
+        currentHP = Mathf.Clamp(currentHP, 0, MaxHP);
+        UpdateUIHealth();
+        Debug.Log($"Player HP: {currentHP}");
+
+        if (currentHP <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void Heal(int amount)
+    {
+        currentHP += amount;
+        currentHP = Mathf.Clamp(currentHP, 0, MaxHP);
+        UpdateUIHealth();
+        Debug.Log($"Healed! Current HP: {currentHP}");
+    }
+    #endregion
+
+    #region EXP & Bar Logic
+    public void TakeExp(int exp)
+    {
+        currentEXP += exp;
+        currentEXP = Mathf.Clamp(currentEXP, 0, MaxExp);
+        Debug.Log($"EXP: {currentEXP}");
+        UpdateUIExp();
+    }
+
+    public void TakeBar(int amount)
+    {
+        currentBar += amount;
+        currentBar = Mathf.Clamp(currentBar, 0, MaxBar);
+        Debug.Log($"Bar: {currentBar}");
+        UpdateUIBar();
+    }
+    #endregion
+
+    #region UI Updates
+    public void UpdateUIHealth()
+    {
+        if (hpSlider)
+        {
+            hpSlider.maxValue = MaxHP;
+            hpSlider.value = currentHP;
+        }
+        if (hpFill) hpFill.color = hpGradient.Evaluate(hpSlider.normalizedValue);
+    }
+
+    public void UpdateUIExp()
+    {
+        if (expSlider)
+        {
+            expSlider.maxValue = MaxExp;
+            expSlider.value = currentEXP;
+        }
+        if (limittextExp) limittextExp.text = $"EXP: {currentEXP}/{MaxExp}";
+    }
+
+    public void UpdateUIBar()
+    {
+        if (barSlider)
+        {
+            barSlider.maxValue = MaxBar;
+            barSlider.value = currentBar;
+        }
+        if (barFill) barFill.color = barGradient.Evaluate(barSlider.normalizedValue);
+        if (BarText) BarText.text = $"Bar: {currentBar}/{MaxBar}";
+    }
+
+    public void UpdateCountEnemy()
+    {
+        if (counttextEnemy)
+        {
+            counttextEnemy.text = $"Enemies Hooked: {counterEnemy}";
+        }
+    }
+    #endregion
+
+    #region Misc Logic
+    public void TakeCountEnemy()
+    {
+        counterEnemy++;
+        UpdateCountEnemy();
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Debug.Log("Enemy hit player");
+        }
+        if (other.CompareTag("EnemyAttack"))
+        {
+            EnemyBee enemy = other.GetComponent<EnemyBee>();
+            if (enemy != null && !enemy.isHooked)
+            {
+                TakeDamage(10);
+            }
+        }
+    }
+
+    IEnumerator DecreaseBarOverTime()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.5f);
+            TakeBar(-1);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (barDecreaseCoroutine != null)
+        {
+            StopCoroutine(barDecreaseCoroutine);
+        }
+    }
+
+    private void OnDrawGizmos()
     {
         if (showBoundaries)
         {
             Gizmos.color = boundaryColor;
-
-            // Draw left boundary line
-            Vector3 leftStart = new Vector3(leftBoundary, transform.position.y - 2f, transform.position.z);
-            Vector3 leftEnd = new Vector3(leftBoundary, transform.position.y + 2f, transform.position.z);
-            Gizmos.DrawLine(leftStart, leftEnd);
-
-            // Draw right boundary line
-            Vector3 rightStart = new Vector3(rightBoundary, transform.position.y - 2f, transform.position.z);
-            Vector3 rightEnd = new Vector3(rightBoundary, transform.position.y + 2f, transform.position.z);
-            Gizmos.DrawLine(rightStart, rightEnd);
-
-            // Draw ground line connecting the boundaries
-            Vector3 groundStart = new Vector3(leftBoundary, transform.position.y - 1f, transform.position.z);
-            Vector3 groundEnd = new Vector3(rightBoundary, transform.position.y - 1f, transform.position.z);
-            Gizmos.DrawLine(groundStart, groundEnd);
+            Gizmos.DrawLine(new Vector3(leftBoundary, transform.position.y - 2, transform.position.z), new Vector3(leftBoundary, transform.position.y + 2, transform.position.z));
+            Gizmos.DrawLine(new Vector3(rightBoundary, transform.position.y - 2, transform.position.z), new Vector3(rightBoundary, transform.position.y + 2, transform.position.z));
+            Gizmos.DrawLine(new Vector3(leftBoundary, transform.position.y - 1, transform.position.z), new Vector3(rightBoundary, transform.position.y - 1, transform.position.z));
         }
     }
-
-
-
-
+    #endregion
 }
