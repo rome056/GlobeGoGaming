@@ -88,7 +88,7 @@ public class EnemyBug : MonoBehaviour
     {
         if (!isStunned)
         {
-            isSlowed = true;
+            //isSlowed = true;
             float currentSpeed = speed;
             speed = newSpeed;
             StartCoroutine(BlinkEffect(duration));
@@ -99,7 +99,7 @@ public class EnemyBug : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         speed = originalSpeed;
-        isSlowed = false;
+        //isSlowed = false;
 
         if (modelRenderer != null)
             modelRenderer.material.color = originalColor;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -37,7 +38,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Count Enemy Kill")]
     public int counterEnemy = 0;
-    public Text counttextEnemy;
+    //public Text counttextEnemy;
+    public TextMeshProUGUI counttextEnemy;
 
     [Header("Bar System")]
     public float MaxBar = 100;

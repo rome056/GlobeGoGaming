@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class Base : MonoBehaviour
 {
-
-    public Text limittext;
+    public TextMeshProUGUI limittext;
     public float maxLimit = 15f;
     public float currentLimit = 0;
 
@@ -39,7 +39,7 @@ public class Base : MonoBehaviour
 
     public void UpdateLimit()
     {
-        limittext.text = currentLimit + " / 15";
+        limittext.text = currentLimit + "/15";
     }
 
 
