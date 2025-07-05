@@ -13,7 +13,7 @@ public class EnemySlime : MonoBehaviour
     private Renderer modelRenderer;
     private Color originalColor;
 
-
+    public bool isHooked = false;
     public GameObject stunEffectPrefab;      // Prefab ng visual effect
     private GameObject stunEffectInstance;
 
@@ -44,7 +44,7 @@ public class EnemySlime : MonoBehaviour
         {
             PlayerController.instance.TakeExp(10);
             PlayerController.instance.TakeCountEnemy();
-            PlayerController.instance.TakeBar(10);
+            // PlayerController.instance.TakeBar(10);
             Destroy(gameObject);
 
         }
@@ -57,10 +57,26 @@ public class EnemySlime : MonoBehaviour
             HookMechanism hook = other.GetComponent<HookMechanism>();
             if (hook != null)
             {
-                hook.HookBee(gameObject); // Mahuhook siya
+                hook.HookSlime(gameObject); // Mahuhook siya
+                PlayerController.instance.TakeBar(10);
                 OnHooked(); // Trigger destroy & spawn
+               
             }
         }
+    }
+    private void GiveHookRewards()
+    {
+        PlayerController.instance.TakeExp(10);
+        PlayerController.instance.TakeCountEnemy();
+        PlayerController.instance.TakeBar(10);
+        Debug.Log("Hook rewards given (with Bar)");
+    }
+
+    private void GiveDamagePenalty()
+    {
+        PlayerController.instance.TakeExp(10);
+        PlayerController.instance.TakeCountEnemy();
+        Debug.Log("Damage penalty given (no Bar)");
     }
     void SplitIntoSmallerEnemies()
     {
@@ -77,6 +93,7 @@ public class EnemySlime : MonoBehaviour
             Instantiate(smallEnemyPrefab, spawnPos, Quaternion.identity);
         }
     }
+
     public void SlowEffect(float newSpeed, float duration)
     {
         if (!isStunned)

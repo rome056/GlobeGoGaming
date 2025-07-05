@@ -130,3 +130,4 @@ MonoBehaviour:
   jumpDuration: 0.8
   zigzagOffsetZ: 3
   isHooked: 0
+  stunEffectPrefab: {fileID: 1447822933094729849, guid: 6f3562715ec3d7a4e8387bf9c4b6bafe, type: 3}

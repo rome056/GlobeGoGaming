@@ -133,5 +133,17 @@ public class HookMechanism : MonoBehaviour
             enemyScript.isHooked = true; // ← i-flag na nahook siya
         }
     }
+    public void HookSlime(GameObject enemyObject)
+    {
+        HasCaughtEnemy = true;
+        hookedEnemy = enemyObject;
+        IsMovingForward = false;
+        IsReturning = true;
 
+        EnemySlime enemyScript = enemyObject.GetComponent<EnemySlime>();
+        if (enemyScript != null)
+        {
+            enemyScript.isHooked = true;
+        }
+    }
 }

@@ -128,3 +128,4 @@ MonoBehaviour:
   speed: 2
   smallEnemyPrefab: {fileID: 1069649848657819851, guid: b193c0ecc4fcc994baa1e0be974b071b, type: 3}
   spreadRadius: 1.5
+  stunEffectPrefab: {fileID: 1447822933094729849, guid: 6f3562715ec3d7a4e8387bf9c4b6bafe, type: 3}

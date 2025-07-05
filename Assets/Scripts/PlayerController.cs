@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
     public Slider barSlider;
     public Image barFill;
     public Gradient barGradient;
+    public float damageCooldown = 1f; // Oras na hindi bababa ang bar pagkatapos madamage
+    private bool isDamaged = false;
 
     [Header("HP Bar")]
     public Slider hpSlider;
@@ -131,6 +133,9 @@ public class PlayerController : MonoBehaviour
         currentHP = Mathf.Clamp(currentHP, 0, MaxHP);
         UpdateUIHealth();
         Debug.Log($"Player HP: {currentHP}");
+        // Set damage state
+        isDamaged = true;
+        Invoke(nameof(ResetDamageState), damageCooldown);
 
         if (currentHP <= 0)
         {
@@ -138,6 +143,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void ResetDamageState()
+    {
+        isDamaged = false;
+    }
     public void Heal(int amount)
     {
         currentHP += amount;
@@ -158,6 +167,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeBar(int amount)
     {
+        if (isDamaged) return;
         currentBar += amount;
         currentBar = Mathf.Clamp(currentBar, 0, MaxBar);
         Debug.Log($"Bar: {currentBar}");
@@ -235,6 +245,11 @@ public class PlayerController : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
             TakeBar(-1);
+            if (!isDamaged)
+            {
+                currentBar = Mathf.Clamp(currentBar - 1, 0, MaxBar);
+                UpdateUIBar();
+            }
         }
     }
 
@@ -257,4 +272,5 @@ public class PlayerController : MonoBehaviour
         }
     }
     #endregion
+   
 }

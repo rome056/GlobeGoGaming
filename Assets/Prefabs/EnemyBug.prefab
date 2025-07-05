@@ -114,6 +114,7 @@ MonoBehaviour:
   dashDuration: 1
   dashCooldown: 1
   isDashing: 1
+  stunEffectPrefab: {fileID: 1447822933094729849, guid: 6f3562715ec3d7a4e8387bf9c4b6bafe, type: 3}
 --- !u!54 &6914501723994668827
 Rigidbody:
   m_ObjectHideFlags: 0

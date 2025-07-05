@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Slow
+  m_text: stun
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 927281e28cc06184ba08fef71fe97621, type: 2}
   m_sharedMaterial: {fileID: -898042154265524193, guid: 927281e28cc06184ba08fef71fe97621, type: 2}
@@ -613,7 +613,7 @@ GameObject:
   - component: {fileID: 290274564}
   - component: {fileID: 290274563}
   m_Layer: 5
-  m_Name: Stun BTN
+  m_Name: Slow BTN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -685,7 +685,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1759741298}
         m_TargetAssemblyTypeName: SkillManager, Assembly-CSharp
-        m_MethodName: ActivateStunField
+        m_MethodName: ActivateSlowField
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -939,6 +939,63 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &448751733
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6016316884013334179, guid: 55bce20015ef6fc4abc1dbcb0c5f677a, type: 3}
+      propertyPath: m_Name
+      value: EnemySlime
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016316884013334181, guid: 55bce20015ef6fc4abc1dbcb0c5f677a, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016316884013334181, guid: 55bce20015ef6fc4abc1dbcb0c5f677a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016316884013334181, guid: 55bce20015ef6fc4abc1dbcb0c5f677a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016316884013334181, guid: 55bce20015ef6fc4abc1dbcb0c5f677a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.5900002
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016316884013334181, guid: 55bce20015ef6fc4abc1dbcb0c5f677a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016316884013334181, guid: 55bce20015ef6fc4abc1dbcb0c5f677a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016316884013334181, guid: 55bce20015ef6fc4abc1dbcb0c5f677a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016316884013334181, guid: 55bce20015ef6fc4abc1dbcb0c5f677a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016316884013334181, guid: 55bce20015ef6fc4abc1dbcb0c5f677a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016316884013334181, guid: 55bce20015ef6fc4abc1dbcb0c5f677a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016316884013334181, guid: 55bce20015ef6fc4abc1dbcb0c5f677a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 55bce20015ef6fc4abc1dbcb0c5f677a, type: 3}
 --- !u!1 &469682927
 GameObject:
   m_ObjectHideFlags: 0
@@ -2049,6 +2106,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
+  damageCooldown: 1
   hpSlider: {fileID: 548650349}
   hpFill: {fileID: 403523879}
   hpGradient:
@@ -2812,7 +2870,7 @@ MonoBehaviour:
   stunDuration: 3
   slowDuration: 5
   newSlowSpeed: 0.5
-  healAmount: 10
+  healAmount: 100
 --- !u!4 &1759741299
 Transform:
   m_ObjectHideFlags: 0
@@ -3287,7 +3345,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Stun
+  m_text: Slow
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 927281e28cc06184ba08fef71fe97621, type: 2}
   m_sharedMaterial: {fileID: -898042154265524193, guid: 927281e28cc06184ba08fef71fe97621, type: 2}
@@ -3552,7 +3610,7 @@ GameObject:
   - component: {fileID: 2133589650}
   - component: {fileID: 2133589649}
   m_Layer: 5
-  m_Name: Slow BTN
+  m_Name: Stun BTN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3624,7 +3682,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1759741298}
         m_TargetAssemblyTypeName: SkillManager, Assembly-CSharp
-        m_MethodName: ActivateSlowField
+        m_MethodName: ActivateStunField
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

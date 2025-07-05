@@ -110,10 +110,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  chargeSpeed: 15
+  chargeSpeed: 10
   detectionRange: 20
   chargeDelay: 0.5
   isHooked: 0
+  stunEffectPrefab: {fileID: 0}
 --- !u!54 &1069649848657819953
 Rigidbody:
   m_ObjectHideFlags: 0
