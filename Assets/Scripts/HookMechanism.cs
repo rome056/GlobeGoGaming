@@ -3,8 +3,8 @@
 public class HookMechanism : MonoBehaviour
 {
     public static HookMechanism instance;
-    public float speed = 20f;
-    public float maxDistance = 20f;
+    public float speed;
+    public float maxDistance;
 
     private Vector3 targetDirection;
     private Vector3 startPoint;
@@ -36,6 +36,8 @@ public class HookMechanism : MonoBehaviour
     {
         playerTransform = player;
         startPoint = player.position;
+        speed = PlayerController.instance.hookSpeed;
+        maxDistance = PlayerController.instance.hookRange;
 
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);

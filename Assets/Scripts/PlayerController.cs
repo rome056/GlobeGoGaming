@@ -51,6 +51,18 @@ public class PlayerController : MonoBehaviour
 
     private Coroutine barDecreaseCoroutine;
 
+    [Header("Upgrade System")]
+    public GameObject upgradePanel;   // ← drag mo dito ang UpgradePanel
+    public Button upgradeRangeButton;
+    public Button upgradeSpeedButton;
+
+    // Hook upgrade values
+    public float hookRange = 10f;
+    public float hookSpeed = 20f;
+    public float hookRangeIncrement = 2f;
+    public float hookSpeedIncrement = 5f;
+
+
     private void Awake()
     {
         if (instance == null)
@@ -74,12 +86,26 @@ public class PlayerController : MonoBehaviour
         UpdateUIExp();
         UpdateUIBar();
         UpdateCountEnemy();
+        if (upgradePanel != null)
+            upgradePanel.SetActive(false);
+
+        if (upgradeRangeButton != null)
+            upgradeRangeButton.onClick.AddListener(UpgradeRange);
+
+        if (upgradeSpeedButton != null)
+            upgradeSpeedButton.onClick.AddListener(UpgradeSpeed);
+
     }
 
     private void Update()
     {
         HandleMovement();
         HandleFishing();
+        if (currentEXP >= MaxExp)
+        {
+            ShowUpgradePanel();
+        }
+
     }
 
     #region Movement & Fishing
@@ -258,5 +284,38 @@ public class PlayerController : MonoBehaviour
         }
     }
     #endregion
+    void ShowUpgradePanel()
+    {
+        if (upgradePanel != null)
+        {
+            upgradePanel.SetActive(true);
+            Time.timeScale = 0f; // pause game habang pumipili
+        }
+    }
+
+    void UpgradeRange()
+    {
+        hookRange += hookRangeIncrement;
+        currentEXP = 0;
+        CloseUpgradePanel();
+        Debug.Log("✅ Upgraded hook range to " + hookRange);
+    }
+
+    void UpgradeSpeed()
+    {
+        hookSpeed += hookSpeedIncrement;
+        currentEXP = 0;
+        CloseUpgradePanel();
+        Debug.Log("✅ Upgraded hook speed to " + hookSpeed);
+    }
+
+    void CloseUpgradePanel()
+    {
+        if (upgradePanel != null)
+            upgradePanel.SetActive(false);
+
+        Time.timeScale = 1f;
+        UpdateUIExp();
+    }
 
 }
