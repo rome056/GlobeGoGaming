@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 948f066562bc1d443b84254b59aa7954
+guid: 4add6a592bf05a04c891c5b26b79e744
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Log
-    second: {fileID: 2100000, guid: 7c162f17f9d0557498810b726ecb6609, type: 2}
+      name: lambert8
+    second: {fileID: 2100000, guid: e4e21c32da0341d4999b5ba0a06a19f1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -39,7 +39,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 50
+    globalScale: 40
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -90,7 +90,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 50
+    globalScale: 40
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
