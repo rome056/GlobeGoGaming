@@ -1027,7 +1027,7 @@ GameObject:
   - component: {fileID: 514604603}
   - component: {fileID: 514604602}
   m_Layer: 5
-  m_Name: Stun BTN (1)
+  m_Name: Clone BTN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1099,7 +1099,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1759741298}
         m_TargetAssemblyTypeName: SkillManager, Assembly-CSharp
-        m_MethodName: ActivateStunField
+        m_MethodName: ActivateClone
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3080,6 +3080,8 @@ MonoBehaviour:
   slowDuration: 5
   newSlowSpeed: 0.5
   healAmount: 100
+  clonePrefab: {fileID: 8291235950984118424, guid: 170c7c3358348b94fb7bf4e01a488e77, type: 3}
+  playerTransform: {fileID: 1292976389}
 --- !u!4 &1759741299
 Transform:
   m_ObjectHideFlags: 0

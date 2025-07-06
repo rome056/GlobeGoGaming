@@ -7,6 +7,18 @@ public class SkillManager : MonoBehaviour
     public float slowDuration = 5f;      // Gaano katagal ang slow effect
     public float newSlowSpeed = 0.5f;    // Bagong speed ng kalaban habang slow
     public int healAmount = 10;
+    public GameObject clonePrefab;          // Reference sa CloneSkill script
+    public Transform playerTransform;      // Reference sa Player transform
+
+    public void ActivateClone()
+    {
+        if (clonePrefab != null && playerTransform != null)
+        {
+            Vector3 spawnPoint = playerTransform.position + playerTransform.forward * 1.5f;
+            Instantiate(clonePrefab, spawnPoint, playerTransform.rotation);
+        }
+    }
+
 
     //void Update()
     //{
