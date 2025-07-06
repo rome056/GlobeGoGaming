@@ -8,6 +8,7 @@ public class CloneSkill : MonoBehaviour
     public Transform hookEnd;
     public float pullSpeed = 7f;
     public float delayBeforeStart = 0.3f;
+    public int maxHooks = 3;
 
     private GameObject hookedEnemy;
 

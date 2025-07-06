@@ -2,6 +2,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -56,11 +57,33 @@ public class PlayerController : MonoBehaviour
     public Button upgradeRangeButton;
     public Button upgradeSpeedButton;
 
+    [Header("Skill Unlock System")]
+    public Button slowButton;
+    public Button stunButton;
+    public Button healButton;
+    public Button cloneButton;
+
+    private List<Button> skillButtons = new List<Button>();
+    private Button unlockedSkill = null;
     // Hook upgrade values
     public float hookRange = 10f;
     public float hookSpeed = 20f;
     public float hookRangeIncrement = 2f;
     public float hookSpeedIncrement = 5f;
+
+    [Header("Skill Upgrade System")]
+    public GameObject skillUpgradePanel;
+    public Button plusSlowButton;
+    public Button plusStunButton;
+    public Button plusCloneButton;
+    public Button plusHealButton;
+
+    public int slowLevel = 0;
+    public int stunLevel = 0;
+    public int cloneLevel = 0;
+    public int healLevel = 0;
+
+    public int maxSkillLevel = 5;
 
 
     private void Awake()
@@ -81,11 +104,20 @@ public class PlayerController : MonoBehaviour
         currentEXP = 0f;
         counterEnemy = 0;
         currentBar = 0f;
+
         barDecreaseCoroutine = StartCoroutine(DecreaseBarOverTime());
+
+        skillButtons.Add(slowButton);
+        skillButtons.Add(stunButton);
+        skillButtons.Add(healButton);
+        skillButtons.Add(cloneButton);
+
+        LockAllSkills();
         UpdateUIHealth();
         UpdateUIExp();
         UpdateUIBar();
         UpdateCountEnemy();
+
         if (upgradePanel != null)
             upgradePanel.SetActive(false);
 
@@ -105,9 +137,99 @@ public class PlayerController : MonoBehaviour
         {
             ShowUpgradePanel();
         }
+        if (currentBar >= MaxBar && unlockedSkill == null)
+        {
+            UnlockRandomSkill();
+        }
+        if (currentEXP >= MaxExp && !skillUpgradePanel.activeSelf)
+        {
+            ShowSkillUpgradeOptions();
+        }
 
     }
+    void ShowSkillUpgradeOptions()
+    {
+        skillUpgradePanel.SetActive(true);
+        Time.timeScale = 0f;
 
+        plusSlowButton.interactable = (slowLevel < maxSkillLevel);
+        plusStunButton.interactable = (stunLevel < maxSkillLevel);
+        plusCloneButton.interactable = (cloneLevel < maxSkillLevel);
+        plusHealButton.interactable = (healLevel < maxSkillLevel);
+    }
+    public void UpgradeSlowSkill()
+    {
+        if (slowLevel < maxSkillLevel)
+        {
+            slowLevel++;
+            currentEXP = 0;
+            CloseSkillUpgradePanel();
+            Debug.Log("Slow skill upgraded to level " + slowLevel);
+        }
+    }
+
+    public void UpgradeStunSkill()
+    {
+        if (stunLevel < maxSkillLevel)
+        {
+            stunLevel++;
+            currentEXP = 0;
+            CloseSkillUpgradePanel();
+            Debug.Log("Stun skill upgraded to level " + stunLevel);
+        }
+    }
+
+    public void UpgradeCloneSkill()
+    {
+        if (cloneLevel < maxSkillLevel)
+        {
+            cloneLevel++;
+            currentEXP = 0;
+            CloseSkillUpgradePanel();
+            Debug.Log("Clone skill upgraded to level " + cloneLevel);
+        }
+    }
+
+    public void UpgradeHealSkill()
+    {
+        if (healLevel < maxSkillLevel)
+        {
+            healLevel++;
+            currentEXP = 0;
+            CloseSkillUpgradePanel();
+            Debug.Log("Heal skill upgraded to level " + healLevel);
+        }
+    }
+    public void CloseSkillUpgradePanel()
+    {
+        skillUpgradePanel.SetActive(false);
+        Time.timeScale = 1f;
+        UpdateUIExp();
+    }
+
+    public void LockAllSkills()
+    {
+        foreach (Button btn in skillButtons)
+            btn.interactable = false;
+
+        unlockedSkill = null;
+    }
+    public void UnlockRandomSkill()
+    {
+        int rand = Random.Range(0, skillButtons.Count);
+        unlockedSkill = skillButtons[rand];
+        unlockedSkill.interactable = true;
+        unlockedSkill.onClick.AddListener(OnSkillUsed);
+    }
+    public void OnSkillUsed()
+    {
+        LockAllSkills();
+        currentBar = 0;
+        UpdateUIBar();
+
+        if (unlockedSkill != null)
+            unlockedSkill.onClick.RemoveListener(OnSkillUsed);
+    }
     #region Movement & Fishing
     private void HandleMovement()
     {
@@ -317,5 +439,5 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 1f;
         UpdateUIExp();
     }
-
+    
 }

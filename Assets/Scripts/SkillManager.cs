@@ -15,8 +15,15 @@ public class SkillManager : MonoBehaviour
         if (clonePrefab != null && playerTransform != null)
         {
             Vector3 spawnPoint = playerTransform.position + playerTransform.forward * 1.5f;
-            Instantiate(clonePrefab, spawnPoint, playerTransform.rotation);
+            GameObject clone = Instantiate(clonePrefab, spawnPoint, playerTransform.rotation);
+
+            CloneSkill hooker = clone.GetComponent<CloneSkill>();
+            if (hooker != null)
+            {
+                hooker.maxHooks += PlayerController.instance.cloneLevel;
+            }
         }
+
     }
 
 
@@ -30,6 +37,7 @@ public class SkillManager : MonoBehaviour
 
     public void ActivateStunField()
     {
+        float upgradedStun = stunDuration + (PlayerController.instance.stunLevel * 0.5f);
         StartCoroutine(StunAllEnemies());
     }
 
@@ -53,11 +61,13 @@ public class SkillManager : MonoBehaviour
             enemy.Stun(stunDuration);
         foreach (EnemyHopper enemy in hoppers)
             enemy.Stun(stunDuration);
+
         yield return null;
     }
 
     public void ActivateSlowField()
     {
+        float upgradedDuration = slowDuration + (PlayerController.instance.slowLevel * 0.5f);
         StartCoroutine(SlowAllEnemies());
     }
 
@@ -94,6 +104,8 @@ public class SkillManager : MonoBehaviour
         }
 
         yield return null;
+
+       
     }
 
     public void HealPlayer()
@@ -101,7 +113,8 @@ public class SkillManager : MonoBehaviour
         PlayerController player = FindObjectOfType<PlayerController>();
         if (player != null)
         {
-            player.Heal(healAmount);
+            int bonusHeal = healAmount + (PlayerController.instance.healLevel * 10);
+            player.Heal(bonusHeal);
         }
         else
         {
