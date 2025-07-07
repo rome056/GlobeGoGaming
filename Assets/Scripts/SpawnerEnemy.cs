@@ -78,7 +78,7 @@ public class SpawnerEnemy : MonoBehaviour
 
     IEnumerator ShowWaveText()
     {
-        if (wavePanel != null && waveTXT != null)
+        if (wavePanel != null)
         {
             wavePanel.SetActive(true);
             waveTXT.text = $"WAVE {currentWave}";

@@ -52,50 +52,35 @@ public class PlayerController : MonoBehaviour
 
     private Coroutine barDecreaseCoroutine;
 
-    [Header("Upgrade System")]
-    public GameObject upgradePanel;   // ← drag mo dito ang UpgradePanel
-    public Button upgradeRangeButton;
-    public Button upgradeSpeedButton;
+    //[Header("Upgrade System")]
+    //public GameObject upgradePanel;
+    //public Button upgradeRangeButton;
+    //public Button upgradeSpeedButton;
 
-    [Header("Skill Unlock System")]
-    public Button slowButton;
-    public Button stunButton;
-    public Button healButton;
-    public Button cloneButton;
-
-    private List<Button> skillButtons = new List<Button>();
-    private Button unlockedSkill = null;
-    // Hook upgrade values
-    public float hookRange = 10f;
-    public float hookSpeed = 20f;
-    public float hookRangeIncrement = 2f;
-    public float hookSpeedIncrement = 5f;
-
-    [Header("Skill Upgrade System")]
+    //[Header("Skill Upgrade System")]
     public GameObject skillUpgradePanel;
-    public Button plusSlowButton;
-    public Button plusStunButton;
-    public Button plusCloneButton;
-    public Button plusHealButton;
+    //public Button plusSlowButton;
+    //public Button plusStunButton;
+    //public Button plusCloneButton;
+    //public Button plusHealButton;
 
     public int slowLevel = 0;
     public int stunLevel = 0;
     public int cloneLevel = 0;
     public int healLevel = 0;
 
-    public int maxSkillLevel = 5;
+    //public int maxSkillLevel = 5;
 
+    //// Hook upgrade values
+    public float hookRange = 10f;
+    public float hookSpeed = 20f;
+    //public float hookRangeIncrement = 2f;
+    //public float hookSpeedIncrement = 5f;
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
     }
 
     private void Start()
@@ -107,132 +92,27 @@ public class PlayerController : MonoBehaviour
 
         barDecreaseCoroutine = StartCoroutine(DecreaseBarOverTime());
 
-        skillButtons.Add(slowButton);
-        skillButtons.Add(stunButton);
-        skillButtons.Add(healButton);
-        skillButtons.Add(cloneButton);
-
-        //LockAllSkills();
         UpdateUIHealth();
         UpdateUIExp();
         UpdateUIBar();
         UpdateCountEnemy();
 
-        if (upgradePanel != null)
-            upgradePanel.SetActive(false);
-
-        if (upgradeRangeButton != null)
-            upgradeRangeButton.onClick.AddListener(UpgradeRange);
-
-        if (upgradeSpeedButton != null)
-            upgradeSpeedButton.onClick.AddListener(UpgradeSpeed);
-
+        //if (upgradePanel != null) upgradePanel.SetActive(false);
+        //if (upgradeRangeButton != null) upgradeRangeButton.onClick.AddListener(UpgradeRange);
+        //if (upgradeSpeedButton != null) upgradeSpeedButton.onClick.AddListener(UpgradeSpeed);
     }
 
     private void Update()
     {
         HandleMovement();
         HandleFishing();
-        if (currentEXP >= MaxExp)
-        {
-            ShowUpgradePanel();
-        }
-        if (currentBar >= MaxBar && unlockedSkill == null)
-        {
-            //UnlockRandomSkill();
-        }
-        if (currentEXP >= MaxExp && !skillUpgradePanel.activeSelf)
-        {
-            ShowSkillUpgradeOptions();
-        }
 
-    }
-    void ShowSkillUpgradeOptions()
-    {
-        skillUpgradePanel.SetActive(true);
-        Time.timeScale = 0f;
-
-        plusSlowButton.interactable = (slowLevel < maxSkillLevel);
-        plusStunButton.interactable = (stunLevel < maxSkillLevel);
-        plusCloneButton.interactable = (cloneLevel < maxSkillLevel);
-        plusHealButton.interactable = (healLevel < maxSkillLevel);
-    }
-    public void UpgradeSlowSkill()
-    {
-        if (slowLevel < maxSkillLevel)
-        {
-            slowLevel++;
-            currentEXP = 0;
-            CloseSkillUpgradePanel();
-            Debug.Log("Slow skill upgraded to level " + slowLevel);
-        }
+        if (currentEXP >= MaxExp) ShowUpgradePanel();
+        //if (currentEXP >= MaxExp && !skillUpgradePanel.activeSelf) ShowSkillUpgradeOptions();
     }
 
-    public void UpgradeStunSkill()
-    {
-        if (stunLevel < maxSkillLevel)
-        {
-            stunLevel++;
-            currentEXP = 0;
-            CloseSkillUpgradePanel();
-            Debug.Log("Stun skill upgraded to level " + stunLevel);
-        }
-    }
-
-    public void UpgradeCloneSkill()
-    {
-        if (cloneLevel < maxSkillLevel)
-        {
-            cloneLevel++;
-            currentEXP = 0;
-            CloseSkillUpgradePanel();
-            Debug.Log("Clone skill upgraded to level " + cloneLevel);
-        }
-    }
-
-    public void UpgradeHealSkill()
-    {
-        if (healLevel < maxSkillLevel)
-        {
-            healLevel++;
-            currentEXP = 0;
-            CloseSkillUpgradePanel();
-            Debug.Log("Heal skill upgraded to level " + healLevel);
-        }
-    }
-    public void CloseSkillUpgradePanel()
-    {
-        skillUpgradePanel.SetActive(false);
-        Time.timeScale = 1f;
-        UpdateUIExp();
-    }
-    // uni ang sa lock tas unlock skill
-
-    //public void LockAllSkills()
-    //{
-        //foreach (Button btn in skillButtons)
-         //   btn.interactable = false;
-
-      //  unlockedSkill = null;
-   // }
-
-    //public void UnlockRandomSkill()
-    //{
-    //    int rand = Random.Range(0, skillButtons.Count);
-    //    unlockedSkill = skillButtons[rand];
-    //    unlockedSkill.interactable = true;
-    //    unlockedSkill.onClick.AddListener(OnSkillUsed);
-    //}
-    public void OnSkillUsed()
-    {
-        //LockAllSkills();
-        currentBar = 0;
-        UpdateUIBar();
-
-        if (unlockedSkill != null)
-            unlockedSkill.onClick.RemoveListener(OnSkillUsed);
-    }
     #region Movement & Fishing
+
     private void HandleMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -272,9 +152,11 @@ public class PlayerController : MonoBehaviour
     {
         isFishing = false;
     }
+
     #endregion
 
     #region Take Damage & Heal
+
     public void TakeDamage(int damage)
     {
         currentHP -= damage;
@@ -287,8 +169,7 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-   
-    
+
     public void Heal(int amount)
     {
         currentHP += amount;
@@ -296,9 +177,11 @@ public class PlayerController : MonoBehaviour
         UpdateUIHealth();
         Debug.Log($"Healed! Current HP: {currentHP}");
     }
+
     #endregion
 
     #region EXP & Bar Logic
+
     public void TakeExp(int exp)
     {
         currentEXP += exp;
@@ -314,17 +197,19 @@ public class PlayerController : MonoBehaviour
         Debug.Log($"Bar: {currentBar}");
         UpdateUIBar();
     }
+
     #endregion
 
     #region UI Updates
+
     public void UpdateUIHealth()
     {
         if (hpSlider)
         {
             hpSlider.maxValue = MaxHP;
             hpSlider.value = currentHP;
+            hpFill.color = hpGradient.Evaluate(hpSlider.normalizedValue);
         }
-        if (hpFill) hpFill.color = hpGradient.Evaluate(hpSlider.normalizedValue);
     }
 
     public void UpdateUIExp()
@@ -334,7 +219,7 @@ public class PlayerController : MonoBehaviour
             expSlider.maxValue = MaxExp;
             expSlider.value = currentEXP;
         }
-        if (limittextExp) limittextExp.text = $"EXP: {currentEXP}/{MaxExp}";
+        limittextExp.text = $"EXP: {currentEXP}/{MaxExp}";
     }
 
     public void UpdateUIBar()
@@ -343,21 +228,21 @@ public class PlayerController : MonoBehaviour
         {
             barSlider.maxValue = MaxBar;
             barSlider.value = currentBar;
+            barFill.color = barGradient.Evaluate(barSlider.normalizedValue);
         }
-        if (barFill) barFill.color = barGradient.Evaluate(barSlider.normalizedValue);
-        if (BarText) BarText.text = $"Bar: {currentBar}/{MaxBar}";
+        BarText.text = $"Bar: {currentBar}/{MaxBar}";
     }
 
     public void UpdateCountEnemy()
     {
-        if (counttextEnemy)
-        {
-            counttextEnemy.text = $"Enemies Hooked: {counterEnemy}";
-        }
+        //if (counttextEnemy)
+        counttextEnemy.text = $"Enemies Hooked: {counterEnemy}";
     }
+
     #endregion
 
     #region Misc Logic
+
     public void TakeCountEnemy()
     {
         counterEnemy++;
@@ -366,10 +251,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
-        {
-            Debug.Log("Enemy hit player");
-        }
         if (other.CompareTag("EnemyAttack"))
         {
             EnemyBee enemy = other.GetComponent<EnemyBee>();
@@ -384,7 +265,7 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f); // ini ang sec kng pagbawas
+            yield return new WaitForSeconds(1f);
             TakeBar(-1);
         }
     }
@@ -402,44 +283,60 @@ public class PlayerController : MonoBehaviour
         if (showBoundaries)
         {
             Gizmos.color = boundaryColor;
-            Gizmos.DrawLine(new Vector3(leftBoundary, transform.position.y - 2, transform.position.z), new Vector3(leftBoundary, transform.position.y + 2, transform.position.z));
-            Gizmos.DrawLine(new Vector3(rightBoundary, transform.position.y - 2, transform.position.z), new Vector3(rightBoundary, transform.position.y + 2, transform.position.z));
-            Gizmos.DrawLine(new Vector3(leftBoundary, transform.position.y - 1, transform.position.z), new Vector3(rightBoundary, transform.position.y - 1, transform.position.z));
+            Gizmos.DrawLine(new Vector3(leftBoundary, transform.position.y - 2, transform.position.z),
+                            new Vector3(leftBoundary, transform.position.y + 2, transform.position.z));
+            Gizmos.DrawLine(new Vector3(rightBoundary, transform.position.y - 2, transform.position.z),
+                            new Vector3(rightBoundary, transform.position.y + 2, transform.position.z));
+            Gizmos.DrawLine(new Vector3(leftBoundary, transform.position.y - 1, transform.position.z),
+                            new Vector3(rightBoundary, transform.position.y - 1, transform.position.z));
         }
     }
+
     #endregion
+
+    #region Upgrade System
+
     void ShowUpgradePanel()
     {
-        if (upgradePanel != null)
+        if (skillUpgradePanel != null)
         {
-            upgradePanel.SetActive(true);
-            Time.timeScale = 0f; // pause game habang pumipili
+            skillUpgradePanel.SetActive(true);
         }
     }
 
-    void UpgradeRange()
-    {
-        hookRange += hookRangeIncrement;
-        currentEXP = 0;
-        CloseUpgradePanel();
-        Debug.Log("✅ Upgraded hook range to " + hookRange);
-    }
+    //void UpgradeRange()
+    //{
+    //    hookRange += hookRangeIncrement;
+    //    currentEXP = 0;
+    //    CloseUpgradePanel();
+    //    Debug.Log("✅ Upgraded hook range to " + hookRange);
+    //}
 
-    void UpgradeSpeed()
-    {
-        hookSpeed += hookSpeedIncrement;
-        currentEXP = 0;
-        CloseUpgradePanel();
-        Debug.Log("✅ Upgraded hook speed to " + hookSpeed);
-    }
+    //void UpgradeSpeed()
+    //{
+    //    hookSpeed += hookSpeedIncrement;
+    //    currentEXP = 0;
+    //    CloseUpgradePanel();
+    //    Debug.Log("✅ Upgraded hook speed to " + hookSpeed);
+    //}
 
-    void CloseUpgradePanel()
-    {
-        if (upgradePanel != null)
-            upgradePanel.SetActive(false);
+    //void CloseUpgradePanel()
+    //{
+    //    if (upgradePanel != null) upgradePanel.SetActive(false);
+    //    Time.timeScale = 1f;
+    //    UpdateUIExp();
+    //}
 
-        Time.timeScale = 1f;
-        UpdateUIExp();
-    }
-    
+    //void ShowSkillUpgradeOptions()
+    //{
+    //    skillUpgradePanel.SetActive(true);
+    //    Time.timeScale = 0f;
+
+    //    plusSlowButton.interactable = (slowLevel < maxSkillLevel);
+    //    plusStunButton.interactable = (stunLevel < maxSkillLevel);
+    //    plusCloneButton.interactable = (cloneLevel < maxSkillLevel);
+    //    plusHealButton.interactable = (healLevel < maxSkillLevel);
+    //}
+
+    #endregion
 }

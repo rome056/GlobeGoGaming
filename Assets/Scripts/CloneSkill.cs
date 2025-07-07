@@ -1,11 +1,13 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 public class CloneSkill : MonoBehaviour
 {
+    [Header("Hook Settings")]
     public LineRenderer hookLine;
     public Transform hookStart;
     public Transform hookEnd;
+
     public float pullSpeed = 7f;
     public float delayBeforeStart = 0.3f;
     public int maxHooks = 3;
@@ -18,7 +20,7 @@ public class CloneSkill : MonoBehaviour
         if (hookEnd == null) hookEnd = transform.Find("HookEnd");
         if (hookLine == null) hookLine = GetComponent<LineRenderer>();
 
-        if (hookLine != null && hookStart != null && hookEnd != null)
+        if (hookLine != null)
         {
             hookLine.positionCount = 2;
             hookLine.sortingOrder = 5;
@@ -26,10 +28,7 @@ public class CloneSkill : MonoBehaviour
         }
 
         Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-        }
+        if (rb != null) rb.constraints = RigidbodyConstraints.FreezeAll;
 
         Invoke(nameof(StartHook), delayBeforeStart);
     }
@@ -53,15 +52,13 @@ public class CloneSkill : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); // Walang kalaban = destroy agad
+            Destroy(gameObject);
         }
     }
 
     IEnumerator PullEnemyToClone(GameObject enemy)
     {
         Rigidbody rb = enemy.GetComponent<Rigidbody>();
-        Collider enemyCol = enemy.GetComponent<Collider>();
-
         if (rb != null)
         {
             rb.velocity = Vector3.zero;
@@ -72,22 +69,23 @@ public class CloneSkill : MonoBehaviour
         while (enemy != null && Vector3.Distance(enemy.transform.position, hookStart.position) > 0.1f)
         {
             hookEnd.position = enemy.transform.position;
-            hookLine.SetPosition(1, hookEnd.position);
-
-            enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, hookStart.position, pullSpeed * Time.deltaTime);
+            enemy.transform.position = Vector3.MoveTowards(
+                enemy.transform.position,
+                hookStart.position,
+                pullSpeed * Time.deltaTime
+            );
             yield return null;
         }
 
-        // Drop enemy (optional effect)
         if (rb != null)
         {
             rb.isKinematic = false;
             rb.useGravity = true;
-            rb.velocity = new Vector3(0, -5f, 0); // para mahulog pababa
+            rb.velocity = new Vector3(0, -5f, 0);
         }
 
         yield return new WaitForSeconds(0.3f);
-        Destroy(gameObject); // ✅ after hook, destroy clone
+        Destroy(gameObject);
     }
 
     GameObject FindNearestEnemy()
@@ -105,7 +103,6 @@ public class CloneSkill : MonoBehaviour
                 closest = enemy;
             }
         }
-
         return closest;
     }
 }
