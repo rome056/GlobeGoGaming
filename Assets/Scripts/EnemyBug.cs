@@ -59,13 +59,14 @@ public class EnemyBug : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Destroy(gameObject);
+
             if (PlayerController.instance != null)
             {
                 PlayerController.instance.TakeExp(10);
                 PlayerController.instance.TakeCountEnemy();
                 PlayerController.instance.TakeBar(5);
             }
-            Destroy(gameObject);
         }
         else if (other.CompareTag("Base"))
         {

@@ -102,6 +102,13 @@ public class PlayerController : MonoBehaviour
         //if (upgradeSpeedButton != null) upgradeSpeedButton.onClick.AddListener(UpgradeSpeed);
     }
 
+    public void ExpTake(int exp)
+    {
+        currentEXP = exp;
+        
+    }
+
+
     private void Update()
     {
         HandleMovement();
@@ -301,6 +308,7 @@ public class PlayerController : MonoBehaviour
         if (skillUpgradePanel != null)
         {
             skillUpgradePanel.SetActive(true);
+            
         }
     }
 

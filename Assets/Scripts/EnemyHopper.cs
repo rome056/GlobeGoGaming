@@ -73,10 +73,12 @@ public class EnemyHopper : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Destroy(gameObject);
+           
             PlayerController.instance.TakeExp(10);
             PlayerController.instance.TakeCountEnemy();
             PlayerController.instance.TakeBar(10);
-            Destroy(gameObject);
+           
         }
         else if (other.CompareTag("Base"))
         {

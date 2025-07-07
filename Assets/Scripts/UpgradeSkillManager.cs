@@ -13,24 +13,46 @@ public class UpgradeSkillManager : MonoBehaviour
         skillManager = FindObjectOfType<SkillManager>();
 
         addStunValue = 0.5f;
-        skillUpgradePanel.SetActive(false);
+        //skillUpgradePanel.SetActive(false);
     }
     public void UpgradeSlow()
     {
-        
+        //digdi
+
+
+        skillUpgradePanel.SetActive(false);
+        PlayerController playerController = FindObjectOfType<PlayerController>();
+
+        playerController.ExpTake(0);
     }
     public void UpgradeStun()
     {
+        
+    
         skillManager.NewStunValue(addStunValue);
         addStunValue++;
         skillUpgradePanel.SetActive(false);
+        PlayerController playerController = FindObjectOfType<PlayerController>();
+
+        playerController.ExpTake(0);
+
     }
     public void UpgradeHeal()
     {
+        //digdi
 
+        skillUpgradePanel.SetActive(false);
+        PlayerController playerController = FindObjectOfType<PlayerController>();
+
+        playerController.ExpTake(0);
     }
     public void UpgradeClone()
     {
+        //digdi
 
+        skillUpgradePanel.SetActive(false);
+        PlayerController playerController = FindObjectOfType<PlayerController>();
+
+        playerController.ExpTake(0);
     }
 }

@@ -85,7 +85,7 @@ public class EnemyBee : MonoBehaviour
             Destroy(gameObject);
         }
 
-        {
+        
             if (other.CompareTag("Hook"))
             {
                 HookMechanism hook = other.GetComponent<HookMechanism>();
@@ -98,7 +98,7 @@ public class EnemyBee : MonoBehaviour
                     PlayerController.instance.TakeCountEnemy();
                 }
             }
-        }
+        
 
     }
     public void SlowEffect(float newSpeed, float duration)
