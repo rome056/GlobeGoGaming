@@ -2466,8 +2466,8 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 1411234880}
-  m_Father: {fileID: 1930889079}
-  m_RootOrder: 0
+  m_Father: {fileID: 552166622}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3415,7 +3415,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1759741298}
         m_TargetAssemblyTypeName: SkillManager, Assembly-CSharp
         m_MethodName: ActivateSlowField
         m_Mode: 1
@@ -5934,7 +5934,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1759741298}
         m_TargetAssemblyTypeName: SkillManager, Assembly-CSharp
         m_MethodName: ActivateClone
         m_Mode: 1
@@ -6527,6 +6527,10 @@ RectTransform:
   m_Children:
   - {fileID: 1675025260}
   - {fileID: 2041123463}
+  - {fileID: 206336031}
+  - {fileID: 1739979890}
+  - {fileID: 1825596032}
+  - {fileID: 1501474765}
   m_Father: {fileID: 893576838}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6548,7 +6552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15955,7 +15959,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1759741298}
         m_TargetAssemblyTypeName: SkillManager, Assembly-CSharp
         m_MethodName: HealPlayer
         m_Mode: 1
@@ -16500,8 +16504,8 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 132945371}
-  m_Father: {fileID: 1930889079}
-  m_RootOrder: 3
+  m_Father: {fileID: 552166622}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -19048,8 +19052,8 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 539829268}
-  m_Father: {fileID: 1930889079}
-  m_RootOrder: 1
+  m_Father: {fileID: 552166622}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -19826,8 +19830,8 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 764100450}
-  m_Father: {fileID: 1930889079}
-  m_RootOrder: 2
+  m_Father: {fileID: 552166622}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -21004,7 +21008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1930889079
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21015,11 +21019,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 206336031}
-  - {fileID: 1739979890}
-  - {fileID: 1825596032}
-  - {fileID: 1501474765}
+  m_Children: []
   m_Father: {fileID: 893576838}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23467,7 +23467,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1759741298}
         m_TargetAssemblyTypeName: SkillManager, Assembly-CSharp
         m_MethodName: ActivateStunField
         m_Mode: 1

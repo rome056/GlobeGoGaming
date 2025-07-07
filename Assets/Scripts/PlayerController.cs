@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
         skillButtons.Add(healButton);
         skillButtons.Add(cloneButton);
 
-        LockAllSkills();
+        //LockAllSkills();
         UpdateUIHealth();
         UpdateUIExp();
         UpdateUIBar();
@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour
         }
         if (currentBar >= MaxBar && unlockedSkill == null)
         {
-            UnlockRandomSkill();
+            //UnlockRandomSkill();
         }
         if (currentEXP >= MaxExp && !skillUpgradePanel.activeSelf)
         {
@@ -206,24 +206,26 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 1f;
         UpdateUIExp();
     }
+    // uni ang sa lock tas unlock skill
 
-    public void LockAllSkills()
-    {
-        foreach (Button btn in skillButtons)
-            btn.interactable = false;
+    //public void LockAllSkills()
+    //{
+        //foreach (Button btn in skillButtons)
+         //   btn.interactable = false;
 
-        unlockedSkill = null;
-    }
-    public void UnlockRandomSkill()
-    {
-        int rand = Random.Range(0, skillButtons.Count);
-        unlockedSkill = skillButtons[rand];
-        unlockedSkill.interactable = true;
-        unlockedSkill.onClick.AddListener(OnSkillUsed);
-    }
+      //  unlockedSkill = null;
+   // }
+
+    //public void UnlockRandomSkill()
+    //{
+    //    int rand = Random.Range(0, skillButtons.Count);
+    //    unlockedSkill = skillButtons[rand];
+    //    unlockedSkill.interactable = true;
+    //    unlockedSkill.onClick.AddListener(OnSkillUsed);
+    //}
     public void OnSkillUsed()
     {
-        LockAllSkills();
+        //LockAllSkills();
         currentBar = 0;
         UpdateUIBar();
 
@@ -382,7 +384,7 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f); // ini ang sec kng pagbawas
             TakeBar(-1);
         }
     }
