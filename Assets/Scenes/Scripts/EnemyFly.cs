@@ -5,16 +5,11 @@ public class EnemyFly : MonoBehaviour
 {
     [Header("Movement")]
     public float speed = 2f;            // Forward speed
-    public float jumpHeight = 1f;       // Height of jump (Y-axis)
-    public float jumpDuration = 0.5f;   // Duration of one zigzag jump
-    public float zigzagOffsetZ = 1f;    // Sideways zigzag amount (Z-axis)
-
-    private bool isJumping = false;
-    private bool jumpRight = true;
-
-    private float jumpStartTime;
-    private Vector3 jumpStartPos;
-    private Vector3 jumpTargetPos;
+    private float zigzagTimer;
+    private Vector3 basePosition;
+    public float zigzagFrequency = 3f;  // Bagong parameter para kontrolin ang bilis ng zigzag
+    public float zigzagWidth = 1f;  // Mas descriptive na pangalan
+    private float fixedYPosition;  // Fixed Y position
 
     [Header("Status")]
     public bool isHooked = false;
@@ -28,12 +23,18 @@ public class EnemyFly : MonoBehaviour
     public GameObject stunEffectPrefab;
     private GameObject stunEffectInstance;
 
+    
+
     void Start()
     {
         originalSpeed = speed;
         modelRenderer = GetComponentInChildren<Renderer>();
         if (modelRenderer != null)
             originalColor = modelRenderer.material.color;
+        basePosition = transform.position;
+
+        fixedYPosition = transform.position.y;  // I-save ang starting Y position
+        zigzagTimer = 0f;
     }
 
     void Update()
@@ -41,36 +42,17 @@ public class EnemyFly : MonoBehaviour
         if (isHooked || isStunned) return;
 
         // Move left towards the base
-        transform.position += Vector3.left * speed * Time.deltaTime;
+        zigzagTimer += Time.deltaTime * zigzagFrequency;
 
-        if (!isJumping)
-        {
-            isJumping = true;
-            jumpStartTime = Time.time;
-            jumpStartPos = transform.position;
+        float zigzagOffset = Mathf.Sin(zigzagTimer * Mathf.PI * 2) * zigzagWidth;
 
-            float targetZ = jumpStartPos.z + (jumpRight ? zigzagOffsetZ : -zigzagOffsetZ);
-            jumpTargetPos = new Vector3(jumpStartPos.x, jumpStartPos.y, targetZ);
+        // Apply movement
+        transform.position = new Vector3(
+            transform.position.x - speed * Time.deltaTime,  // Left movement
+            fixedYPosition,                                 // Fixed Y position
+            transform.position.z + zigzagOffset * Time.deltaTime * zigzagFrequency  // Zigzag
+        );
 
-            jumpRight = !jumpRight;
-        }
-        else
-        {
-            float elapsed = Time.time - jumpStartTime;
-            float percent = elapsed / jumpDuration;
-
-            if (percent >= 1f)
-            {
-                isJumping = false;
-                transform.position = new Vector3(transform.position.x, jumpStartPos.y, jumpTargetPos.z);
-            }
-            else
-            {
-                float yOffset = Mathf.Sin(percent * Mathf.PI) * jumpHeight;
-                float newZ = Mathf.Lerp(jumpStartPos.z, jumpTargetPos.z, percent);
-                transform.position = new Vector3(transform.position.x, jumpStartPos.y + yOffset, newZ);
-            }
-        }
     }
 
     void OnTriggerEnter(Collider other)

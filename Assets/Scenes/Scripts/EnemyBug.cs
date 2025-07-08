@@ -65,7 +65,7 @@ public class EnemyBug : MonoBehaviour
             {
                 PlayerController.instance.TakeExp(10);
                 PlayerController.instance.TakeCountEnemy();
-                PlayerController.instance.TakeBar(5);
+                PlayerController.instance.TakeBar(10);
             }
         }
         else if (other.CompareTag("Base"))

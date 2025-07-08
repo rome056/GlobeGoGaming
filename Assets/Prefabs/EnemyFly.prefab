@@ -126,10 +126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69dfae514ed1af640aa411f831331f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  jumpHeight: 1.5
-  jumpDuration: 0.8
-  zigzagOffsetZ: 3
+  speed: 2
+  zigzagFrequency: 1
+  zigzagWidth: 7
   isHooked: 0
   stunEffectPrefab: {fileID: 1447822933094729849, guid: 6f3562715ec3d7a4e8387bf9c4b6bafe, type: 3}
 --- !u!1001 &2050004164270102653
@@ -145,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6abdd8d3de13fe64389488f16aa5fc69, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.74919224
+      value: -0.492
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6abdd8d3de13fe64389488f16aa5fc69, type: 3}
       propertyPath: m_LocalPosition.y
@@ -153,7 +152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6abdd8d3de13fe64389488f16aa5fc69, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.75739956
+      value: -0.044
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6abdd8d3de13fe64389488f16aa5fc69, type: 3}
       propertyPath: m_LocalRotation.w

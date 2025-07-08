@@ -112,6 +112,10 @@ public class HookMechanism : MonoBehaviour
             hookedEnemy = other.gameObject;
             IsMovingForward = false;
             IsReturning = true;
+            if (PlayerController.instance != null)
+            {
+                PlayerController.instance.TakeBar(10); // 10 points per hook
+            }
         }
         if (!IsReturning && other.CompareTag("EnemyAttack"))
         {
