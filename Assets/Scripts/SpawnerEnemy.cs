@@ -8,6 +8,7 @@ public class SpawnerEnemy : MonoBehaviour
     [Header("----- Enemy Prefabs -----")]
     //public List<GameObject> enemies = new List<GameObject>();
     public GameObject[] enemies;
+    public GameObject enemyBoss;
 
     [Header("----- Spawner Points -----")]
     //public List<Transform> spawner = new List<Transform>();
@@ -21,6 +22,7 @@ public class SpawnerEnemy : MonoBehaviour
     [Header("----- Wave Settings -----")]
     public int startingEnemiesPerWave = 10;
     public int enemyIncrementPerWave = 5;
+    private bool bossActivate = false;
 
     private int currentWave = 1;
     private int enemiesToSpawnInWave;
@@ -43,8 +45,16 @@ public class SpawnerEnemy : MonoBehaviour
         enemiesToSpawnInWave = startingEnemiesPerWave + enemyIncrementPerWave * (currentWave - 1);
         enemiesSpawnedThisWave = 0;
 
-        StartCoroutine(SpawnWave());
         StartCoroutine(ShowWaveText());
+        StartCoroutine(SpawnWave());
+
+        if (bossActivate)
+        {
+            Transform bossSpawnPoint = spawner[1];
+            Instantiate(enemyBoss, bossSpawnPoint.position, bossSpawnPoint.rotation);
+
+            bossActivate = false;
+        }
     }
 
     IEnumerator SpawnWave()
@@ -61,6 +71,11 @@ public class SpawnerEnemy : MonoBehaviour
 
         spawnInterval -= spawnDecrement;
         spawnInterval = Mathf.Clamp(spawnInterval, limitDecrement, 999f);
+
+        if (currentWave >= 3)
+        {
+            bossActivate = true;
+        }
 
         // Optional: Add delay between waves
         yield return new WaitForSeconds(10f);
@@ -104,6 +119,7 @@ public class SpawnerEnemy : MonoBehaviour
         }
 
         Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+
     }
 
 
