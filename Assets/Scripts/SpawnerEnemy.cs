@@ -15,6 +15,8 @@ public class SpawnerEnemy : MonoBehaviour
 
     [Header("----- Spawn Settings -----")]
     public float spawnInterval = 3f;
+    public float spawnDecrement = 0.2f;
+    public float limitDecrement = 1f;
 
     [Header("----- Wave Settings -----")]
     public int startingEnemiesPerWave = 10;
@@ -32,6 +34,7 @@ public class SpawnerEnemy : MonoBehaviour
 
     void Start()
     {
+        spawnInterval = Mathf.Max(spawnInterval, limitDecrement);
         StartWave();
     }
 
@@ -46,6 +49,7 @@ public class SpawnerEnemy : MonoBehaviour
 
     IEnumerator SpawnWave()
     {
+
         while (enemiesSpawnedThisWave < enemiesToSpawnInWave)
         {
             SpawnEnemy();
@@ -54,6 +58,9 @@ public class SpawnerEnemy : MonoBehaviour
         }
 
         currentWave++;
+
+        spawnInterval -= spawnDecrement;
+        spawnInterval = Mathf.Clamp(spawnInterval, limitDecrement, 999f);
 
         // Optional: Add delay between waves
         yield return new WaitForSeconds(10f);
