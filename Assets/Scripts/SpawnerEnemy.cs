@@ -6,10 +6,12 @@ using TMPro;
 public class SpawnerEnemy : MonoBehaviour
 {
     [Header("----- Enemy Prefabs -----")]
-    public List<GameObject> enemies = new List<GameObject>();
+    //public List<GameObject> enemies = new List<GameObject>();
+    public GameObject[] enemies;
 
     [Header("----- Spawner Points -----")]
-    public List<Transform> spawner = new List<Transform>();
+    //public List<Transform> spawner = new List<Transform>();
+    public Transform[] spawner;
 
     [Header("----- Spawn Settings -----")]
     public float spawnInterval = 3f;
@@ -61,20 +63,43 @@ public class SpawnerEnemy : MonoBehaviour
 
     void SpawnEnemy()
     {
-        if (enemies.Count == 0 || spawner.Count == 0)
+        if (enemies.Length == 0 || spawner.Length == 0)
         {
             Debug.LogWarning("No enemies or spawners assigned!");
             return;
         }
 
-        int enemyIndex = Random.Range(0, enemies.Count);
-        GameObject enemyPrefab = enemies[enemyIndex];
+        GameObject enemyPrefab = null;
+        Transform spawnPoint = null;
 
-        int spawnerIndex = Random.Range(0, spawner.Count);
-        Transform spawnPoint = spawner[spawnerIndex];
+        if (enemiesSpawnedThisWave == 0)
+        {
+            // First enemy = enemies[0] -> spawner[0]
+            enemyPrefab = enemies[0];
+            spawnPoint = spawner[0];
+        }
+        else if (enemiesSpawnedThisWave == 1)
+        {
+            // Second enemy = enemies[1] -> spawner[1]
+            enemyPrefab = enemies[1];
+            spawnPoint = spawner[1];
+        }
+        else
+        {
+            // Other enemies = enemies[2] or enemies[3] -> spawner[2] only
+            int enemyIndex = Random.Range(2, enemies.Length);
+
+            // If you want them to spawn ONLY in spawner[2]:
+            int spawnerIndex = 2;
+
+            enemyPrefab = enemies[enemyIndex];
+            spawnPoint = spawner[spawnerIndex];
+        }
 
         Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
     }
+
+
 
     IEnumerator ShowWaveText()
     {
