@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
     public int cloneLevel = 0;
     public int healLevel = 0;
 
-    public float hookRange = 10f;
+    public float hookRange = 6f;
     public float hookSpeed = 20f;
 
     private void Awake()

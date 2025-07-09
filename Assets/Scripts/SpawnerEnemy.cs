@@ -12,7 +12,7 @@ public class SpawnerEnemy : MonoBehaviour
     public List<Transform> spawner = new List<Transform>();
 
     [Header("----- Spawn Settings -----")]
-    public float spawnInterval = 1f;
+    public float spawnInterval = 3f;
 
     [Header("----- Wave Settings -----")]
     public int startingEnemiesPerWave = 10;
