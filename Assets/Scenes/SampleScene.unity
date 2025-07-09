@@ -17669,6 +17669,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillUpgradePanel: {fileID: 1534026454}
   addStunValue: 0.5
+  addSlowValue: 0.5
+  addHealValue: 4
 --- !u!1001 &1534404489
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19830,9 +19832,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1292976384}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: UpgradeSlowSkill
+      - m_Target: {fileID: 1534026456}
+        m_TargetAssemblyTypeName: UpgradeSkillManager, Assembly-CSharp
+        m_MethodName: UpgradeSlow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19994,9 +19996,13 @@ MonoBehaviour:
   baseStunDuration: 1
   currentStunValue: 0
   maxStunValue: 5
-  baseSlowDuration: 5
+  baseSlowDuration: 1
   newSlowSpeed: 0.5
+  currentSlowValue: 0
+  maxSlowValue: 5
   baseHealAmount: 10
+  currentHealValue: 0
+  maxHealValue: 20
   clonePrefab: {fileID: 8291235950984118424, guid: 170c7c3358348b94fb7bf4e01a488e77, type: 3}
   playerTransform: {fileID: 1292976389}
 --- !u!4 &1759741299
@@ -20610,9 +20616,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1292976384}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: UpgradeHealSkill
+      - m_Target: {fileID: 1534026456}
+        m_TargetAssemblyTypeName: UpgradeSkillManager, Assembly-CSharp
+        m_MethodName: UpgradeHeal
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -52,30 +52,15 @@ public class PlayerController : MonoBehaviour
 
     private Coroutine barDecreaseCoroutine;
 
-    //[Header("Upgrade System")]
-    //public GameObject upgradePanel;
-    //public Button upgradeRangeButton;
-    //public Button upgradeSpeedButton;
-
-    //[Header("Skill Upgrade System")]
     public GameObject skillUpgradePanel;
-    //public Button plusSlowButton;
-    //public Button plusStunButton;
-    //public Button plusCloneButton;
-    //public Button plusHealButton;
 
     public int slowLevel = 0;
     public int stunLevel = 0;
     public int cloneLevel = 0;
     public int healLevel = 0;
 
-    //public int maxSkillLevel = 5;
-
-    //// Hook upgrade values
     public float hookRange = 10f;
     public float hookSpeed = 20f;
-    //public float hookRangeIncrement = 2f;
-    //public float hookSpeedIncrement = 5f;
 
     private void Awake()
     {
@@ -96,10 +81,6 @@ public class PlayerController : MonoBehaviour
         UpdateUIExp();
         UpdateUIBar();
         UpdateCountEnemy();
-
-        //if (upgradePanel != null) upgradePanel.SetActive(false);
-        //if (upgradeRangeButton != null) upgradeRangeButton.onClick.AddListener(UpgradeRange);
-        //if (upgradeSpeedButton != null) upgradeSpeedButton.onClick.AddListener(UpgradeSpeed);
     }
 
     public void ExpTake(int exp)
@@ -242,7 +223,6 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateCountEnemy()
     {
-        //if (counttextEnemy)
         counttextEnemy.text = $"Enemies Hooked: {counterEnemy}";
     }
 
@@ -311,40 +291,6 @@ public class PlayerController : MonoBehaviour
             
         }
     }
-
-    //void UpgradeRange()
-    //{
-    //    hookRange += hookRangeIncrement;
-    //    currentEXP = 0;
-    //    CloseUpgradePanel();
-    //    Debug.Log("✅ Upgraded hook range to " + hookRange);
-    //}
-
-    //void UpgradeSpeed()
-    //{
-    //    hookSpeed += hookSpeedIncrement;
-    //    currentEXP = 0;
-    //    CloseUpgradePanel();
-    //    Debug.Log("✅ Upgraded hook speed to " + hookSpeed);
-    //}
-
-    //void CloseUpgradePanel()
-    //{
-    //    if (upgradePanel != null) upgradePanel.SetActive(false);
-    //    Time.timeScale = 1f;
-    //    UpdateUIExp();
-    //}
-
-    //void ShowSkillUpgradeOptions()
-    //{
-    //    skillUpgradePanel.SetActive(true);
-    //    Time.timeScale = 0f;
-
-    //    plusSlowButton.interactable = (slowLevel < maxSkillLevel);
-    //    plusStunButton.interactable = (stunLevel < maxSkillLevel);
-    //    plusCloneButton.interactable = (cloneLevel < maxSkillLevel);
-    //    plusHealButton.interactable = (healLevel < maxSkillLevel);
-    //}
 
     #endregion
 }

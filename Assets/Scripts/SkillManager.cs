@@ -10,11 +10,15 @@ public class SkillManager : MonoBehaviour
     public float maxStunValue = 5f;
 
     [Header("Slow Skill")]
-    public float baseSlowDuration = 5f;
+    public float baseSlowDuration = 1f;
     public float newSlowSpeed = 0.5f;
+    public float currentSlowValue = 0f;
+    public float maxSlowValue = 5f;
 
     [Header("Heal Skill")]
     public int baseHealAmount = 10;
+    public int currentHealValue = 0;
+    public float maxHealValue = 20f;
 
     [Header("Clone Skill")]
     public GameObject clonePrefab;  // ✅ DRAG your CloneSkill prefab here
@@ -23,6 +27,8 @@ public class SkillManager : MonoBehaviour
     private void Start()
     {
         currentStunValue = baseStunDuration;
+        currentSlowValue = baseSlowDuration;
+        currentHealValue = baseHealAmount;
     }
 
     #region Clone Skill
@@ -84,7 +90,11 @@ public class SkillManager : MonoBehaviour
 
     #region Slow Skill
 
-
+    public void NewSlowValue(float addSlowValue)
+    {
+        currentSlowValue += addSlowValue;
+        currentSlowValue = Mathf.Clamp(currentSlowValue, 0, maxSlowValue);
+    }
 
 
     public void ActivateSlowField()
@@ -104,25 +114,25 @@ public class SkillManager : MonoBehaviour
 
         foreach (EnemySlime slime in slimes)
         {
-            slime.SlowEffect(newSlowSpeed, baseSlowDuration);
+            slime.SlowEffect(newSlowSpeed, currentSlowValue);
         }
 
         foreach (EnemyFly fly in flies)
         {
-            fly.SlowEffect(newSlowSpeed, baseSlowDuration);
+            fly.SlowEffect(newSlowSpeed, currentSlowValue);
         }
 
         foreach (EnemyBee bee in bees)
         {
-            bee.SlowEffect(newSlowSpeed, baseSlowDuration);
+            bee.SlowEffect(newSlowSpeed, currentSlowValue);
         }
         foreach (EnemyBug bug in bugs)
         {
-            bug.SlowEffect(newSlowSpeed, baseSlowDuration);
+            bug.SlowEffect(newSlowSpeed, currentSlowValue);
         }
         foreach (EnemyHopper hopper in hoppers)
         {
-            hopper.SlowEffect(newSlowSpeed, baseSlowDuration);
+            hopper.SlowEffect(newSlowSpeed, currentSlowValue);
         }
 
         yield return null;
@@ -130,12 +140,19 @@ public class SkillManager : MonoBehaviour
     #endregion
 
     #region Heal Skill
+
+    public void NewHealValue(int addHealValue)
+    {
+        currentHealValue += addHealValue;
+        currentHealValue = Mathf.Clamp(currentHealValue, 0, Mathf.RoundToInt(maxHealValue));
+    }
+
     public void HealPlayer()
     {
         PlayerController player = FindObjectOfType<PlayerController>();
         if (player != null)
         {
-            int bonusHeal = baseHealAmount + (PlayerController.instance.healLevel * 10);
+            int bonusHeal = currentHealValue + (PlayerController.instance.healLevel * 10);
             player.Heal(bonusHeal);
         }
         else
