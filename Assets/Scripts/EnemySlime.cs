@@ -43,7 +43,7 @@ public class EnemySlime : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerController.instance.TakeExp(10);
-            PlayerController.instance.TakeCountEnemy();
+            //PlayerController.instance.TakeCountEnemy();
             // PlayerController.instance.TakeBar(10);
             Destroy(gameObject);
 
@@ -67,7 +67,7 @@ public class EnemySlime : MonoBehaviour
     private void GiveHookRewards()
     {
         PlayerController.instance.TakeExp(10);
-        PlayerController.instance.TakeCountEnemy();
+        //PlayerController.instance.TakeCountEnemy();
         PlayerController.instance.TakeBar(10);
         Debug.Log("Hook rewards given (with Bar)");
     }
@@ -75,7 +75,7 @@ public class EnemySlime : MonoBehaviour
     private void GiveDamagePenalty()
     {
         PlayerController.instance.TakeExp(10);
-        PlayerController.instance.TakeCountEnemy();
+        //PlayerController.instance.TakeCountEnemy();
         Debug.Log("Damage penalty given (no Bar)");
     }
     void SplitIntoSmallerEnemies()

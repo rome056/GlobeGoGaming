@@ -29,18 +29,12 @@ public class PlayerController : MonoBehaviour
     [Header("Player EXP")]
     public float MaxExp = 100f;
     public float currentEXP = 0f;
-    public TextMeshProUGUI limittextExp;
     public Slider expSlider;
     public Image expFill;
 
-    [Header("Count Enemy Kill")]
-    public int counterEnemy = 0;
-    public TextMeshProUGUI counttextEnemy;
-
-    [Header("Bar System")]
+    [Header("Skill Bar System")]
     public float MaxBar = 100f;
     public float currentBar = 0f;
-    public TextMeshProUGUI BarText;
     public Slider barSlider;
     public Image barFill;
     public Gradient barGradient;
@@ -85,7 +79,6 @@ public class PlayerController : MonoBehaviour
     {
         currentHP = MaxHP;
         currentEXP = 0f;
-        counterEnemy = 0;
         currentBar = 0f;
 
         // Initialize skill buttons list
@@ -101,7 +94,6 @@ public class PlayerController : MonoBehaviour
         UpdateUIHealth();
         UpdateUIExp();
         UpdateUIBar();
-        UpdateCountEnemy();
     }
 
     public void ExpTake(int exp)
@@ -115,17 +107,23 @@ public class PlayerController : MonoBehaviour
     {
         HandleMovement();
         HandleFishing();
-        // Check if bar is full to unlock a skill
+
+        //Para sa Skill sa pagunlock para magamit
         if (currentBar >= MaxBar && unlockedSkill == null)
         {
-
             UnlockRandomSkill();
             currentEXP = 0; // Reset EXP
-            UpdateUIExp();  // Update UI
+            UpdateUIBar();
         }
 
-        if (currentEXP >= MaxExp) ShowUpgradePanel();
-        //if (currentEXP >= MaxExp && !skillUpgradePanel.activeSelf) ShowSkillUpgradeOptions();
+        //Para sa pagupgrade kang Skill
+        if (currentEXP >= MaxExp) 
+        {
+            ShowUpgradePanel();
+            currentBar = 0;
+            UpdateUIExp();
+        }
+        
     }
 
     #region Movement & Fishing
@@ -187,6 +185,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //for heal...........
     public void Heal(int amount)
     {
         currentHP += amount;
@@ -335,7 +334,6 @@ public class PlayerController : MonoBehaviour
             expSlider.maxValue = MaxExp;
             expSlider.value = currentEXP;
         }
-        limittextExp.text = $"EXP: {currentEXP}/{MaxExp}";
     }
 
     public void UpdateUIBar()
@@ -346,23 +344,11 @@ public class PlayerController : MonoBehaviour
             barSlider.value = currentBar;
             barFill.color = barGradient.Evaluate(barSlider.normalizedValue);
         }
-        BarText.text = $"Bar: {currentBar}/{MaxBar}";
-    }
-
-    public void UpdateCountEnemy()
-    {
-        counttextEnemy.text = $"Enemies Hooked: {counterEnemy}";
     }
 
     #endregion
 
     #region Misc Logic
-
-    public void TakeCountEnemy()
-    {
-        counterEnemy++;
-        UpdateCountEnemy();
-    }
 
     public void OnTriggerEnter(Collider other)
     {

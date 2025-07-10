@@ -94,9 +94,8 @@ public class EnemyBee : MonoBehaviour
                 isHooked = true;                 // ← I-flag na nahook na ito
                 //PlayerController.instance.TakeExp(10);
                 hook.HookBee(gameObject);        // ← I-hook ang sarili
-                    PlayerController.instance.TakeBar(10);
+                PlayerController.instance.TakeBar(10);
                 PlayerController.instance.TakeExp(10);
-                PlayerController.instance.TakeCountEnemy();
                 }
             }
         

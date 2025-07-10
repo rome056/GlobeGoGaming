@@ -64,7 +64,6 @@ public class EnemyBug : MonoBehaviour
             if (PlayerController.instance != null)
             {
                 PlayerController.instance.TakeExp(10);
-                PlayerController.instance.TakeCountEnemy();
                 PlayerController.instance.TakeBar(10);
             }
         }

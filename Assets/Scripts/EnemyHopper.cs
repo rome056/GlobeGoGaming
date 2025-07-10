@@ -76,7 +76,6 @@ public class EnemyHopper : MonoBehaviour
             Destroy(gameObject);
            
             PlayerController.instance.TakeExp(10);
-            PlayerController.instance.TakeCountEnemy();
             PlayerController.instance.TakeBar(10);
            
         }

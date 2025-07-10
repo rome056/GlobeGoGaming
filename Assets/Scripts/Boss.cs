@@ -96,7 +96,6 @@ public class Boss : MonoBehaviour
             if (PlayerController.instance != null)
             {
                 PlayerController.instance.TakeExp(100);
-                PlayerController.instance.TakeCountEnemy();
                 PlayerController.instance.TakeBar(10);
             }
         }
@@ -207,7 +206,7 @@ public class Boss : MonoBehaviour
         if (PlayerController.instance != null)
         {
             PlayerController.instance.TakeExp(100);
-            PlayerController.instance.TakeCountEnemy();
+            //PlayerController.instance.TakeCountEnemy();
             PlayerController.instance.TakeBar(10);
         }
     }
