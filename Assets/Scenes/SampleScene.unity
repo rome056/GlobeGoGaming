@@ -3624,6 +3624,10 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
+  slowButton: {fileID: 290274563}
+  stunButton: {fileID: 2133589649}
+  healButton: {fileID: 1421421859}
+  cloneButton: {fileID: 514604602}
   skillUpgradePanel: {fileID: 1534026454}
   slowLevel: 0
   stunLevel: 0

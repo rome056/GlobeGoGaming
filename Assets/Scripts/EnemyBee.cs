@@ -90,12 +90,13 @@ public class EnemyBee : MonoBehaviour
             {
                 HookMechanism hook = other.GetComponent<HookMechanism>();
                 if (hook != null)
-                {
-                    isHooked = true;                 // ← I-flag na nahook na ito
-                    hook.HookBee(gameObject);        // ← I-hook ang sarili
+            {
+                isHooked = true;                 // ← I-flag na nahook na ito
+                //PlayerController.instance.TakeExp(10);
+                hook.HookBee(gameObject);        // ← I-hook ang sarili
                     PlayerController.instance.TakeBar(10);
-                    PlayerController.instance.TakeExp(10);
-                    PlayerController.instance.TakeCountEnemy();
+                PlayerController.instance.TakeExp(10);
+                PlayerController.instance.TakeCountEnemy();
                 }
             }
         

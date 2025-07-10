@@ -123,6 +123,10 @@ public class HookMechanism : MonoBehaviour
             hookedEnemy = other.gameObject;
             IsMovingForward = false;
             IsReturning = true;
+            if (PlayerController.instance != null)
+            {
+                PlayerController.instance.TakeExp(10); // 10 points per hook
+            }
         }
     }
     public void HookBee(GameObject enemyObject)

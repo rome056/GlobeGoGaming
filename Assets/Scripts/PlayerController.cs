@@ -50,10 +50,21 @@ public class PlayerController : MonoBehaviour
     public Image hpFill;
     public Gradient hpGradient;
 
+    [Header("Skill Unlock System")]
+    public Button slowButton;
+    public Button stunButton;
+    public Button healButton;
+    public Button cloneButton;
+
+    private List<Button> skillButtons = new List<Button>();
+    private Button unlockedSkill = null;
+
     private Coroutine barDecreaseCoroutine;
 
     public GameObject skillUpgradePanel;
 
+
+    [Header("Skill System")]
     public int slowLevel = 0;
     public int stunLevel = 0;
     public int cloneLevel = 0;
@@ -61,6 +72,8 @@ public class PlayerController : MonoBehaviour
 
     public float hookRange = 6f;
     public float hookSpeed = 20f;
+    private bool isSkillReady = false;
+
 
     private void Awake()
     {
@@ -74,6 +87,14 @@ public class PlayerController : MonoBehaviour
         currentEXP = 0f;
         counterEnemy = 0;
         currentBar = 0f;
+
+        // Initialize skill buttons list
+        skillButtons.Clear();
+        skillButtons.Add(slowButton);
+        skillButtons.Add(stunButton);
+        skillButtons.Add(healButton);
+        skillButtons.Add(cloneButton);
+        LockAllSkills();
 
         barDecreaseCoroutine = StartCoroutine(DecreaseBarOverTime());
 
@@ -94,6 +115,14 @@ public class PlayerController : MonoBehaviour
     {
         HandleMovement();
         HandleFishing();
+        // Check if bar is full to unlock a skill
+        if (currentBar >= MaxBar && unlockedSkill == null)
+        {
+
+            UnlockRandomSkill();
+            currentEXP = 0; // Reset EXP
+            UpdateUIExp();  // Update UI
+        }
 
         if (currentEXP >= MaxExp) ShowUpgradePanel();
         //if (currentEXP >= MaxExp && !skillUpgradePanel.activeSelf) ShowSkillUpgradeOptions();
@@ -184,12 +213,111 @@ public class PlayerController : MonoBehaviour
         currentBar = Mathf.Clamp(currentBar, 0, MaxBar);
         Debug.Log($"Bar: {currentBar}");
         UpdateUIBar();
+
+        if (currentBar >= MaxBar && !isSkillReady && unlockedSkill == null)
+        {
+            isSkillReady = true;
+            UnlockRandomSkill();
+        }
     }
 
     #endregion
 
     #region UI Updates
+    public void LockAllSkills()
+    {
+        foreach (Button btn in skillButtons)
+        {
+            if (btn != null)
+                btn.interactable = false;
+        }
+        unlockedSkill = null;
+    }
+    public void UnlockRandomSkill()
+    {
+        // Filter out null buttons
+        List<Button> validButtons = new List<Button>();
+        foreach (Button btn in skillButtons)
+        {
+            if (btn != null)
+                validButtons.Add(btn);
+        }
 
+        if (validButtons.Count > 0)
+        {
+            int rand = Random.Range(0, validButtons.Count);
+            unlockedSkill = validButtons[rand];
+            unlockedSkill.interactable = true;
+
+            // Remove any existing listeners to prevent duplicates
+            unlockedSkill.onClick.RemoveAllListeners();
+            unlockedSkill.onClick.AddListener(OnSkillUsed);
+
+            Debug.Log($"Unlocked skill: {unlockedSkill.name}");
+        }
+    }
+    public void OnSkillUsed()
+    {
+        Debug.Log("Skill used!");
+
+        // Apply effect based on unlocked skill
+        if (unlockedSkill == slowButton)
+        {
+            ApplySlowEffect();
+        }
+        else if (unlockedSkill == stunButton)
+        {
+            ApplyStunEffect();
+        }
+        else if (unlockedSkill == healButton)
+        {
+            ApplyHealEffect();
+        }
+        else if (unlockedSkill == cloneButton)
+        {
+            ApplyCloneEffect();
+        }
+
+        // Lock skills and reset bar
+        LockAllSkills();
+        currentBar = 0;
+        isSkillReady = false;
+        UpdateUIBar();
+    }
+
+
+    #endregion
+
+    #region Skill Effects
+
+    private void ApplySlowEffect()
+    {
+        // Implement slow effect logic here
+        Debug.Log("Slow effect applied!");
+        // Example: Slow down enemies for a duration
+    }
+
+    private void ApplyStunEffect()
+    {
+        // Implement stun effect logic here
+        Debug.Log("Stun effect applied!");
+        // Example: Stun enemies for a duration
+    }
+
+    private void ApplyHealEffect()
+    {
+        // Implement heal effect logic here
+        Debug.Log("Heal effect applied!");
+        int healAmount = 20 + (healLevel * 5); // Scale with level
+        Heal(healAmount);
+    }
+
+    private void ApplyCloneEffect()
+    {
+        // Implement clone effect logic here
+        Debug.Log("Clone effect applied!");
+        // Example: Create temporary clones or extra hooks
+    }
     public void UpdateUIHealth()
     {
         if (hpSlider)

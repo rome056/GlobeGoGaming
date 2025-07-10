@@ -77,6 +77,7 @@ public class EnemyFly : MonoBehaviour
             {
                 isHooked = true;
                 hook.HookBee(gameObject);
+                PlayerController.instance.TakeBar(10);
             }
         }
     }
