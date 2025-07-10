@@ -72,7 +72,7 @@ public class SpawnerEnemy : MonoBehaviour
         spawnInterval -= spawnDecrement;
         spawnInterval = Mathf.Clamp(spawnInterval, limitDecrement, 999f);
 
-        if (currentWave >= 3)
+        if (currentWave >= 2)
         {
             bossActivate = true;
         }

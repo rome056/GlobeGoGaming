@@ -20,29 +20,29 @@ public class Boss : MonoBehaviour
     [Header("Status")]
     public bool isHooked = false;
     private bool isStunned = false;
-    private float originalSpeed;
+    //private float originalSpeed;
 
     [Header("Visuals")]
     public GameObject summonEffectPrefab;
-    public GameObject stunEffectPrefab;
-    private GameObject stunEffectInstance;
+    //public GameObject stunEffectPrefab;
+    //private GameObject stunEffectInstance;
     private Renderer modelRenderer;
     private Color originalColor;
-    public GameObject damageEffectPrefab;
+    //public GameObject damageEffectPrefab;
     [Header("Health")]
-    public int maxHealth = 500;
-    public int currentHealth;
-    public Slider healthSlider; // Reference sa UI health bar
+    //public int maxHealth = 500;
+    public int currentHealth = 100;
+    //public Slider healthSlider; // Reference sa UI health bar
     public int hookDamage = 50; // Damage kada hook
     void Start()
     {
         fixedYPosition = transform.position.y;
-        originalSpeed = speed;
+        //originalSpeed = speed;
         modelRenderer = GetComponentInChildren<Renderer>();
         if (modelRenderer != null) originalColor = modelRenderer.material.color;
 
-        currentHealth = maxHealth;
-        UpdateHealthUI();
+        //currentHealth = maxHealth;
+        //UpdateHealthUI();
         summonTimer = summonInterval;
     }
 
@@ -159,11 +159,11 @@ public class Boss : MonoBehaviour
         speed = 0f; // 🛑 Stop movement
 
         // 🔆 Mag-spawn ng visual effect (optional)
-        if (stunEffectPrefab != null && stunEffectInstance == null)
-        {
-            stunEffectInstance = Instantiate(stunEffectPrefab, transform.position + Vector3.up * 1f, Quaternion.identity);
-            stunEffectInstance.transform.SetParent(transform); // Para sumunod sa enemy
-        }
+        //if (stunEffectPrefab != null && stunEffectInstance == null)
+        //{
+        //    stunEffectInstance = Instantiate(stunEffectPrefab, transform.position + Vector3.up * 1f, Quaternion.identity);
+        //    stunEffectInstance.transform.SetParent(transform); // Para sumunod sa enemy
+        //}
 
         yield return new WaitForSeconds(duration);
 
@@ -171,44 +171,52 @@ public class Boss : MonoBehaviour
         isStunned = false;
         speed = originalSpeed;
 
-        if (stunEffectInstance != null)
-        {
-            Destroy(stunEffectInstance);
-        }
+        //if (stunEffectInstance != null)
+        //{
+        //    Destroy(stunEffectInstance);
+        //}
     }
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        UpdateHealthUI();
+        //UpdateHealthUI();
 
         // Damage effect
-        if (damageEffectPrefab != null)
-        {
-            Instantiate(damageEffectPrefab, transform.position, Quaternion.identity);
-        }
+        //if (damageEffectPrefab != null)
+        //{
+        //    Instantiate(damageEffectPrefab, transform.position, Quaternion.identity);
+        //}
 
-        if (currentHealth <= 0)
+        if (currentHealth >= 1)
+        {
+            StartCoroutine(ResetHookState(0.5f));
+        }
+        else
         {
             Die();
         }
+
+        //if (currentHealth <= 0)
+        //{
+        //    Die();
+        //}
     }
 
-    void UpdateHealthUI()
-    {
-        if (healthSlider != null)
-        {
-            healthSlider.value = (float)currentHealth / maxHealth;
-        }
-    }
+    //void UpdateHealthUI()
+    //{
+    //    if (healthSlider != null)
+    //    {
+    //        healthSlider.value = (float)currentHealth / maxHealth;
+    //    }
+    //}
     void Die()
     {
-        Destroy(gameObject);
         if (PlayerController.instance != null)
         {
             PlayerController.instance.TakeExp(100);
-            //PlayerController.instance.TakeCountEnemy();
             PlayerController.instance.TakeBar(10);
         }
+        Destroy(gameObject);
     }
     IEnumerator ResetHookState(float delay)
     {

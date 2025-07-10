@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
         if (currentBar >= MaxBar && unlockedSkill == null)
         {
             UnlockRandomSkill();
-            currentEXP = 0; // Reset EXP
+            currentBar = 0;
             UpdateUIBar();
         }
 
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
         if (currentEXP >= MaxExp) 
         {
             ShowUpgradePanel();
-            currentBar = 0;
+            currentEXP = 0; // Reset EXP
             UpdateUIExp();
         }
         

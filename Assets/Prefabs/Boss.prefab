@@ -233,7 +233,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -4.19, y: 0}
   m_SizeDelta: {x: 1.61, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -293,7 +293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1344733456
 RectTransform:
   m_ObjectHideFlags: 0
@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 9184769636766512892}
   m_Layer: 0
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -511,11 +511,8 @@ MonoBehaviour:
   summonRadius: 3
   isHooked: 0
   summonEffectPrefab: {fileID: 1582639895311219992, guid: 6f5beb08f23d818439f9d902f74d3c68, type: 3}
-  stunEffectPrefab: {fileID: 0}
-  damageEffectPrefab: {fileID: 0}
   maxHealth: 500
   currentHealth: 0
-  healthSlider: {fileID: 560675925}
   hookDamage: 50
 --- !u!1001 &3605303531192520359
 PrefabInstance:
